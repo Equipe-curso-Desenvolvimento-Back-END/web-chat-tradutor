@@ -15,10 +15,10 @@ public class HomeController {
 
     }
 
-    @GetMapping("/cadastro")
+    @GetMapping("/register")
     public String cadastro() {
 
-        return "cadastro";
+        return "register";
 
     }
 

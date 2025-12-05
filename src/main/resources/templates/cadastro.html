@@ -3,16 +3,27 @@
         <title>cadastro</title>
     </head>
     <body>
-        <h2>Cadastro</h2>
-        <form method=POST>
-            <p>Nome</p>
-            <input></input>
-            <p>Email</p>
-            <input></input>
-            <p>Senha</p>
-            <input></input>
-            <a href="file:///C:/Users/Pietr%C3%A3oTunado/workspace-chat/chat-tradutor-2/chat-tradutor/src/main/resources/templates/login.html">enviar</a>
-            <a href="/login"><button>enviar</button></a>
-        </form>
+        <!--- As tags <br> sao temporarias remover quando criar o .css-->
+       <div>  <!--- Div box cadastro-->
+        <h2>Cadastro</h2> <!-- colocar em ingles temp-->
+            <form method="post">
+            <div> <!--- div para o campo usuario-->
+                <label for="username">User name</label><br>
+                <input type="text" name="name" id="username" placeholder="Write your name here!">
+            </div>
+            <div> <!-- div para o campo usuario-->
+                <label for="email">E-mail</label><br>
+                <input type="email" name="email" id="email" placeholder="Write your email here!">
+            </div>
+            <div>
+                <label for="password">Password</label><br>
+                <input type="password" name="password" id="password" placeholder="Write your password here!">
+            </div>
+            <!-- possivel futura confirmacao de cadastro-->
+            <button type="submit">Enviar</button><br>
+                <!---->
+            <a href="/">Voltar a pagina principal</a>
+            </form>
+       </div>
     </body>
 </html>

@@ -6,6 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Column;
+
+import java.time.LocalDateTime;
+//import java.time.LocalDate;
+
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class User implements Serializable {
@@ -20,7 +27,27 @@ public class User implements Serializable {
     private String password;
     private String nationality;
 
-    // add construtor
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime registrationDate;
+
+    public User() {
+    }
+
+    public User(String name, String email, String password, String nationality) {
+
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.nationality = nationality;
+
+    }
+
+    @PrePersist()
+    public void prePersist() {
+
+        this.registrationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
+    }
 
     public long getId() {
 
@@ -78,6 +105,12 @@ public class User implements Serializable {
     public void setNationality(String nationality) {
 
         this.nationality = nationality;
+
+    }
+
+    public LocalDateTime getRegistrationDate() {
+
+        return registrationDate;
 
     }
 

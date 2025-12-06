@@ -35,19 +35,12 @@ public class UserService {
 
     }
 
-    public User loginUser(long id, User user) {
+    // somente User por contado login ser metodo POST
+    public User loginUser(User user) {
 
-        User storage = repo.findById(id).orElse(null);
+        if (repo.existsByEmail(user.getEmail()) && repo.existsByPassword(user.getPassword())) {
 
-        if (storage == null) {
-
-            throw new RuntimeException("Usuario nao existe");
-
-        }
-
-        if (storage.getEmail().equals(user.getEmail()) && storage.getPassword().equals(user.getPassword())) {
-
-            return storage;
+            return user;
 
         }
 

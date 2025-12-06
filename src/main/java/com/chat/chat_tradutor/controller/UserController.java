@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.validation.BindingResult;
 
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.stereotype.Controller;
 
 // para teste
 
-import com.chat.chat_tradutor.common.DevConstants;
+import com.chat.chat_tradutor.config.DevConstants;
 
 @Controller
 public class UserController {
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String createUser(@Valid User user, BindingResult result) {
+    public String createUser(@ModelAttribute User user, BindingResult result) {
 
         if(result.hasErrors()) {
 
@@ -50,8 +51,47 @@ public class UserController {
 
         }
 
-        // temp
+
+        // try catch temp para testes
+        try{
+
+            User teste = service.saveUser(user);
+            //teste.setName("0101010001001");
+            //service.patchUser(teste.getId(),teste);
+
+        }catch(Exception e) {
+
+            return "redirect:/register";
+
+        }
+
         return "redirect:/login";
+
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute User user, BindingResult result) {
+
+        if(result.hasErrors()) {
+
+            // temp retornar a main index/home
+            return "redirect:/register";
+
+        }
+
+        try{
+
+            User local = service.loginUser(user.getId(),user);
+            System.out.println("Conta de"+local+" logada!");
+
+        }catch(Exception e) {
+
+            return "redirect:/login";
+
+        }
+
+        // temp ira para sala room
+        return "redrect:/";
 
     }
 

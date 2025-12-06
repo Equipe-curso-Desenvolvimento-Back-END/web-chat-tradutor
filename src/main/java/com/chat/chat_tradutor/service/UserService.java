@@ -5,6 +5,8 @@ import com.chat.chat_tradutor.model.User;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -17,18 +19,85 @@ public class UserService {
     }
 
     // posteriormente
-    public User saveUser(User user) {
-
-        User local = user;
+    public User saveUser(User user) throws RuntimeException {
 
         // verifica se todo campo e falso de acordo com RN
-        if (!(repo.existsByName(local.getName())) || !(repo.existsByEmail(local.getEmail())) || !(repo.existsByPassword(local.getPassword()))) {
+
+        if (repo.existsByName(user.getName()) || repo.existsByEmail(user.getEmail()) || repo.existsByPassword(user.getPassword())) {
+
+            throw new RuntimeException("Usuario ja existe!");
+
+        }
+
+        repo.save(user);
+
+        return user;
+
+    }
+
+    public User loginUser(long id, User user) {
+
+        User storage = repo.findById(id).orElse(null);
+
+        if (storage == null) {
+
+            throw new RuntimeException("Usuario nao existe");
+
+        }
+
+        if (storage.getEmail().equals(user.getEmail()) && storage.getPassword().equals(user.getPassword())) {
+
+            return storage;
+
+        }
+
+        throw new RuntimeException("Valor incorretos!");
+
+    }
+
+    // testing to read
+    // ainda nao testando
+    public User readUser(long id, User user) {
+
+        return repo.findById(id).orElse(null);
+
+    }
+
+    // teste de atualizacao all
+    public User patchUser(long id, User user) {
+
+        User local = repo.findById(id).orElse(null);
+
+        if (local == null) {
 
             return null;
 
         }
 
+        if (user.getName() != null) local.setName(user.getName());
+        if (user.getEmail() != null) local.setEmail(user.getEmail());
+        if (user.getPassword() != null) local.setPassword(user.getPassword());
+        if (user.getNationality() != null) local.setNationality(user.getNationality());
+
+        repo.save(local);
+
         return local;
+
+    }
+
+    public boolean removeUser(long id) {
+
+        User user = repo.findById(id).orElse(null);
+
+        if (user == null) {
+
+            return false;
+
+        }
+
+        repo.deleteById(user.getId());
+
+        return true;
 
     }
 

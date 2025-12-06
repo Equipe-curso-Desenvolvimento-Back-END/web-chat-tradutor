@@ -102,7 +102,10 @@ public class UserService {
 
         if (repo.existsByEmail(user.getEmail()) && repo.existsByPassword(user.getPassword())) {
 
-            return user;
+            // procura pelo campo email pois nao existe repeticao
+            // de acordo com o RN
+
+            return repo.findByEmailAndPassword(user.getEmail(),user.getPassword()).orElse(null);
 
         }
 

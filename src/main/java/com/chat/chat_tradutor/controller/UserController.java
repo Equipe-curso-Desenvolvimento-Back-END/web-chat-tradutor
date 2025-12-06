@@ -48,6 +48,7 @@ public class UserController {
             System.out.println("email: "+user.getEmail());
             System.out.println("Senha: "+user.getPassword());
             System.out.println("Nacionalidade: "+user.getNationality());
+            System.out.println("Data Cadastro: "+user.getRegistrationDate());
 
         }
 
@@ -60,8 +61,6 @@ public class UserController {
             service.validPassword(user.getPassword());
 
             User teste = service.saveUser(user);
-            //teste.setName("0101010001001");
-            //service.patchUser(teste.getId(),teste);
 
         }catch(Exception e) {
 
@@ -86,7 +85,15 @@ public class UserController {
         }
 
         User local = service.loginUser(user);
-        System.out.println("Conta de"+local+" logada!");
+
+        if (DevConstants.devkit == DevConstants.ON) {
+
+            System.out.println("Identificador: "+local.getId());
+            System.out.println("Data do registro: "+local.getRegistrationDate());
+            System.out.println("Conta(nome): "+local.getName()+" logada!");
+
+        }
+
 
         // temp ira para sala room
         return "redirect:/";

@@ -79,19 +79,11 @@ public class UserController {
 
         }
 
-        try{
-
-            User local = service.loginUser(user.getId(),user);
-            System.out.println("Conta de"+local+" logada!");
-
-        }catch(Exception e) {
-
-            return "redirect:/login";
-
-        }
+        User local = service.loginUser(user);
+        System.out.println("Conta de"+local+" logada!");
 
         // temp ira para sala room
-        return "redrect:/";
+        return "redirect:/";
 
     }
 

@@ -43,7 +43,7 @@ public class ThreadChat implements Serializable{
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_user_id", nullable = false)
     private User creator;
 

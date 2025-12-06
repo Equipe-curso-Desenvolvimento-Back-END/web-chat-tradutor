@@ -4,28 +4,17 @@ public final class UserConstants {
 
     // Password definido no RN
 
-    public static final int MIN_SIZE_PASSWORD = 8;
-
-    // Modelo ENG/EN
-    public static final int UPPER_CASES_MAX = 90; // 0x5A
-    public static final int UPPER_CASES_MIN = 65; // 0x41
-
-    public static final int LOWER_CASES_MAX = 97; // 0x61
-    public static final int LOWER_CASES_MIN = 122; // 0x7A
-
-    public static final char[] ESPECIAL_CASES = {'&','$','!','*','#'};
+    // Somente caracteres ocidentais
+    public static final String RENGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[&$!*#]).{8,}$";
 
     // Email definido no RN
 
     public static final int MAX_SIZE_EMAIL = 100;
 
+    public static final char ESPECIAL_CHAR_EMAIL = '@';
+
     // Name definido no RN
 
     public static final int MAX_SIZE_NAME = 50;
-
-    // Provavel nao necessidade de implementacao
-    //public static final int MIN_SIZE_NAME = 2;
-
-
 
 }

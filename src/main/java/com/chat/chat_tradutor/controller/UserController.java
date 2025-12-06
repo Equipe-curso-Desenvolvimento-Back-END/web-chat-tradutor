@@ -55,11 +55,17 @@ public class UserController {
         // try catch temp para testes
         try{
 
+            service.validName(user.getName());
+            service.validEmail(user.getEmail());
+            service.validPassword(user.getPassword());
+
             User teste = service.saveUser(user);
             //teste.setName("0101010001001");
             //service.patchUser(teste.getId(),teste);
 
         }catch(Exception e) {
+
+            e.printStackTrace();
 
             return "redirect:/register";
 

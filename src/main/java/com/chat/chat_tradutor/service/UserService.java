@@ -5,7 +5,12 @@ import com.chat.chat_tradutor.model.User;
 
 import org.springframework.stereotype.Service;
 
+import com.chat.chat_tradutor.common.UserConstants;
+
 import java.util.Optional;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 @Service
 public class UserService {
@@ -15,6 +20,63 @@ public class UserService {
     public UserService(UserRepository repo) {
 
         this.repo = repo;
+
+    }
+
+    public boolean validName(String name) {
+
+        if (name.length() > UserConstants.MAX_SIZE_NAME || name.length() <= 0) {
+
+            throw new RuntimeException("Nome fora das normas");
+
+        }
+
+        return true;
+
+    }
+
+    public boolean validEmail(String email) {
+
+        if (email.length() > UserConstants.MAX_SIZE_EMAIL || email.length() <= 0) {
+
+            throw new RuntimeException("Email fora das normas");
+
+        }
+
+        String[] letters = email.split("");
+
+        int cont = -1;
+
+        for (String let : letters) {
+
+            char a = let.charAt(0);
+
+            if (a == UserConstants.ESPECIAL_CHAR_EMAIL) {cont++;}
+
+        }
+
+        if (cont != 0) {
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+
+    public boolean validPassword(String password) {
+
+        Pattern p = Pattern.compile(UserConstants.RENGEX);
+        Matcher m = p.matcher(password);
+
+        if (!(m.find())) {
+
+            throw new RuntimeException("Senha fora dos padroes");
+
+        }
+
+        return m.matches();
 
     }
 

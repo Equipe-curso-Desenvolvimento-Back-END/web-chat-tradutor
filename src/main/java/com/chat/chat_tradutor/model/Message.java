@@ -19,7 +19,7 @@ import jakarta.persistence.CascadeType;
 
 import java.time.LocalDateTime;
 
-import jaca.time.temporal.ChronoUnit;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class Message implements Serializable {
@@ -57,7 +57,7 @@ public class Message implements Serializable {
     @PrePersist
     public void prePersit() {
 
-        this.registrationDate = DateLocalTime.now().truncatedTo(ChronoUnit.SECONDS);
+        this.registrationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     }
 

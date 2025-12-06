@@ -53,12 +53,12 @@ public class ThreadChat implements Serializable{
     public ThreadChat() {
     }
 
-    public ThreadChat(String creator, String description, Room room, User user) {
+    public ThreadChat(String name, String description, Room room, User user) {
 
-        this.creator = creator;
+        this.name = name;
         this.description = description;
         this.room = room;
-        this.user = user;
+        this.creator = creator;
 
     }
 
@@ -75,15 +75,15 @@ public class ThreadChat implements Serializable{
 
     }
 
-    public String getCreator() {
+    public String getName() {
 
         return name;
 
     }
 
-    public void setCreator(String creator) {
+    public void setName(String name) {
 
-        this.creator = creator;
+        this.name = name;
 
     }
 
@@ -111,13 +111,13 @@ public class ThreadChat implements Serializable{
 
     }
 
-    public User getUser() {
+    public User getCreator() {
 
-        return user;
+        return creator;
 
     }
 
-    public List<Message> getMenssages() {
+    public List<Message> getMessages() {
 
         return messages;
 

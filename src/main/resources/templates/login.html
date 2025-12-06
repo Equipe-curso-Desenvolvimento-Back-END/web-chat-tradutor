@@ -3,14 +3,23 @@
         <title>login</title>
     </head>
     <body>
-        <h2>login</h2>
-        <form method="post">
-            <p>nome/email</p>
-            <input></input>
-            <p>senha</p>
-            <input></input>
-            <a href="/salas"><button>logar</button></a>
-            <a href="/register">Cadastre aqui!</a>
-        </form>
+        <!--- As tags <br> sao temporarias remover quando criar o .css-->
+       <div>  <!--- Div box cadastro-->
+        <h2>Login</h2> <!-- colocar em ingles temp-->
+            <form method="post">
+            <div> <!-- div para o campo usuario-->
+                <label for="email">E-mail</label><br>
+                <input type="email" name="email" id="email" placeholder="Write your email here!">
+            </div>
+            <div>
+                <label for="password">Password</label><br>
+                <input type="password" name="password" id="password" placeholder="Write your password here!">
+            </div>
+            <!-- possivel futura confirmacao de cadastro-->
+            <button type="submit">Login</button><br>
+                <!---->
+            <a href="/register">Não tem cadastro? Click aqui!</a>
+            </form>
+       </div>
     </body>
 </html>

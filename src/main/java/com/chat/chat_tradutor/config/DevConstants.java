@@ -1,4 +1,4 @@
-package com.chat.chat_tradutor.common;
+package com.chat.chat_tradutor.config;
 
 public final class DevConstants {
 

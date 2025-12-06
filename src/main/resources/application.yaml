@@ -3,7 +3,7 @@ spring:
     name: ChatTradutor
 
   datasource:
-    url: jdbc:mysql://localhost:3306/bancoteste?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/teste01?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: adminRoot23!
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.stereotype.Controller;
 
+import jakarta.servlet.http.HttpSession;
+
 // para teste
 
 import com.chat.chat_tradutor.config.DevConstants;
@@ -75,7 +77,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, BindingResult result) {
+    public String login(@ModelAttribute User user, BindingResult result, HttpSession session) {
 
         if(result.hasErrors()) {
 
@@ -84,19 +86,38 @@ public class UserController {
 
         }
 
-        User local = service.loginUser(user);
+        // temporario ate colocar tags de mensagem jtml
+        try {
 
-        if (DevConstants.devkit == DevConstants.ON) {
+            User local = service.loginUser(user);
 
-            System.out.println("Identificador: "+local.getId());
-            System.out.println("Data do registro: "+local.getRegistrationDate());
-            System.out.println("Conta(nome): "+local.getName()+" logada!");
+            // security method avaible
+            if (local == null) {
+
+                return "redirect:/login?error=true";
+
+            }
+
+            if (DevConstants.devkit == DevConstants.ON) {
+
+                System.out.println("Identificador: "+local.getId());
+                System.out.println("Data do registro: "+local.getRegistrationDate());
+                System.out.println("Conta(nome): "+local.getName()+" logada!");
+
+            }
+
+            session.setAttribute("user",local);
+
+        }catch(Exception e) {
+
+            return "redirect:/login";
 
         }
 
+        // salvar a sessao
 
         // temp ira para sala room
-        return "redirect:/";
+        return "redirect:/rooms";
 
     }
 

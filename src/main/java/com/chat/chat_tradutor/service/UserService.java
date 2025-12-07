@@ -109,7 +109,7 @@ public class UserService {
 
         }
 
-        throw new RuntimeException("Valor incorretos!");
+        throw new RuntimeException("Email ou Senha incorreta!");
 
     }
 

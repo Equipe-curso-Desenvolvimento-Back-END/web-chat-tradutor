@@ -7,6 +7,12 @@
        <div>  <!--- Div box cadastro-->
         <h2>Login</h2> <!-- colocar em ingles temp-->
             <form method="post">
+
+            <div th:if="${loginError}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${loginError}"></p>
+            </div>
+
             <div> <!-- div para o campo usuario-->
                 <label for="email">E-mail</label><br>
                 <input type="email" name="email" id="email" placeholder="Write your email here!">

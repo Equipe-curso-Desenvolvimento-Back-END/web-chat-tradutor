@@ -5,16 +5,34 @@
     <body>
         <!--- As tags <br> sao temporarias remover quando criar o .css-->
        <div>  <!--- Div box cadastro-->
-        <h2>Cadastro</h2> <!-- colocar em ingles temp-->
+        <h2>Cadastro</h2> <!-- colocar em ingls temp-->
             <form method="post">
+
+            <div th:if="${namedError}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${namedError}"></p>
+            </div>
+
             <div> <!--- div para o campo usuario-->
                 <label for="username">User name</label><br>
                 <input type="text" name="name" id="username" placeholder="Write your name here!">
             </div>
+
+            <div th:if="${emailError}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${emailError}"></p>
+            </div>
+
             <div> <!-- div para o campo usuario-->
                 <label for="email">E-mail</label><br>
                 <input type="email" name="email" id="email" placeholder="Write your email here!">
             </div>
+
+            <div th:if="${password}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${password}"></p>
+            </div>
+
             <div>
                 <label for="password">Password</label><br>
                 <input type="password" name="password" id="password" placeholder="Write your password here!">

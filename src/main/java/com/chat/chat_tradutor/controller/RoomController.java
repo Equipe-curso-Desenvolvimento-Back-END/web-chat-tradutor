@@ -72,6 +72,44 @@ public class RoomController {
 
     }
 
+    @GetMapping("/myaccount")
+    public String listMyRooms(HttpSession session,
+            Model model, RedirectAttributes flash) {
+
+        if (session.getAttribute("user") == null) {
+
+            return "redirect:/login";
+
+        }
+
+        Long creatorId = (Long) session.getAttribute("userId");
+
+        if (creatorId == null) {
+
+            flash.addFlashAttribute("myAccountError", "Impossivel acessar, Usuario não foi autenticado!");
+
+            return "rooms/login";
+
+        }
+
+        List<Room> myRooms = service.findAllByCreatorId(creatorId);
+
+        if (myRooms.isEmpty()) {
+
+            flash.addFlashAttribute("myAccountEmptyError", "Você ainda não cadastrou nem uma sala!");
+
+            return "rooms/myaccount";
+
+        }
+
+        model.addAttribute("myRoomsList",myRooms);
+
+        flash.addFlashAttribute("myAccountConfirm", "Resgate das suas salas foi um sucesso!");
+
+        return "rooms/myaccount";
+
+    }
+
     @GetMapping("/create")
     public String createPage(HttpSession session) {
 
@@ -124,9 +162,14 @@ public class RoomController {
     // Redirecionar novamente a sala apos a criacao
 
     @PostMapping("/create")
-    public String createRoom(@ModelAttribute Room room, BindingResult result,HttpSession session) {
+    public String createRoom(@ModelAttribute Room room,
+            BindingResult result,
+            HttpSession session,
+            RedirectAttributes flash) {
 
         if (result.hasErrors()) {
+
+            flash.addFlashAttribute("createRoomError", "Ocorreu um erro inesperado!");
 
             return "redirect:rooms/create";
 
@@ -134,30 +177,23 @@ public class RoomController {
 
         if (room.getName().length() == 0 || room.getDescription().length() == 0) {
 
-            throw new RuntimeException("Campos vazios!");
+            flash.addFlashAttribute("createRoomError", "Campos de nome ou descrição incorretos ou vazios!");
+
+            return "redirect:/rooms/create";
 
         }
-
-        // cadastrando o usuario atual como dono da sala
 
         Long creatorId = (Long) session.getAttribute("userId");
 
         if (creatorId == null) {
-            throw new RuntimeException("Usuario nao autenticado");
+
+            flash.addFlashAttribute("createRoomError", "Impossivel acessar, Usuario não foi autenticado!");
+
+            return "redirect:/rooms/create";
 
         }
 
         room.setCreatorId(creatorId);
-
-        // cadastrando como um participante
-
-
-        // Salvando no DB a sala, com o dono
-
-
-        // se atentar com essa parte do codigo, importante
-        // pois para fazer alteracoes de negocio deve-se
-        // sabe o que esta ocorrento
 
         // Nessa linha nos usamos o metodo de servico da sala
         // para salvar a sala com o seu respectivo dono representado
@@ -169,66 +205,82 @@ public class RoomController {
 
         if (saved == null) {
 
-            throw new RuntimeException("Nome da sala ja existe!");
+            flash.addFlashAttribute("createRoomError", "Nome de sala já existetente!");
+
+            return "redirect:/rooms/create";
 
         }
 
+        // temp log de verificao
         System.out.println("Repositorio: "+saved.getName()+" Cadastrado");
         System.out.println("Dono: "+userService.readUser(creatorId).getName()+" !!!");
 
         // futuramente ira ser a sala com n valor id
-        return "redirect:/rooms";
+        return "redirect:/rooms"; // futuro caminho /rooms/room(chat)/{id}
 
     }
 
     @PostMapping("/remove")
     public String deleteRoom(
             @RequestParam("name") String name,
-            @RequestParam(name = "isConfirmed", required = false) boolean checkbox,HttpSession session) {
+            @RequestParam(name = "isConfirmed", required = false) boolean checkbox,
+            HttpSession session, RedirectAttributes flash) {
 
             Room room = service.findByName(name);
 
             if (room == null) {
 
-                throw new RuntimeException("Nome nao existe!");
+                flash.addFlashAttribute("deleteRoomError", "Nome da sala não é existente!");
+
+                return "redirect:/rooms/remove";
 
             }
 
             if (!(checkbox)) {
 
-                //return "redirect/rooms?erro=confirmation_requeried";
-                throw new RuntimeException("checkbox nao marcado");
+                flash.addFlashAttribute("deleteRoomError", "Checkbox deve ser obrigatoriamente marcada!");
+
+                return "redirect:/rooms/remove";
 
             }
 
             Long creatorId = (Long) session.getAttribute("userId");
 
+            System.out.println("Creator: "+creatorId);
+
             if (creatorId == null) {
 
-                throw new RuntimeException("Usuario nao autenticado");
+                flash.addFlashAttribute("deleteRoomError", "Impossivel acessar, Usuario não foi autenticado!");
+
+                return "redirect:/rooms/remove";
 
             }
+
+            room.setCreatorId(creatorId);
 
             if (!(creatorId.equals(room.getCreatorId()))) {
 
-                throw new RuntimeException("Impossivel apagar voce nao e o dono da sala");
 
-            }
-
-            if (service.deleteRoom(room.getId())) {
-
-                System.out.println("A sala"+room.getName()+" foi removida!");
+                flash.addFlashAttribute("deleteRoomError", "Não é possivel apagar a sala, você não é o dono!");
 
                 return "redirect:/rooms/remove";
+
             }
 
-            System.out.println("Nao foi possivel remover sua sala");
+            if (!(service.deleteRoom(room.getId()))) {
 
-            // possivel fultura mensagem de confirmacao
-            // e manter o usuario ainda no delete
-            // futuramente
+                flash.addFlashAttribute("deleteRoomError", String.format("Não foi possivel remove a sala \"%d\"",room.getName()));
 
-            return "redirect:/rooms"; // /rooms/delete
+                return "redirect:/rooms/remove";
+
+            }
+
+            flash.addFlashAttribute("deleteRoomError", String.format("Sala \"%s\" foi removida com sucesso!",room.getName()));
+
+            // Por base usuario se mantem em delete
+            // Somente um redirect na funcao deve conter para esse formato
+
+            return "redirect:/rooms/remove";
 
     }
 

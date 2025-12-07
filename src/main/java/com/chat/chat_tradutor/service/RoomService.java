@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import java.lang.Iterable;
+
 @Service
 public class RoomService {
 
@@ -48,6 +50,13 @@ public class RoomService {
 
     }
 
+    // sobrescrita pode gerar erro
+    public Room findById(Long id) {
+
+        // metodo padrao do Spring  Boot
+        return repo.findById(id).orElse(null);
+
+    }
     public Room findById(long id) {
 
         return repo.findById(id).orElse(null);
@@ -62,6 +71,15 @@ public class RoomService {
 
     }
 
+    public List<Room> findAllByCreatorId(Long id) {
+
+        return repo.findAllByCreatorId(id);
+
+    }
+
+    // Se atentar com o erro de nao remover
+    // as tabelas associadas
+
     public boolean deleteRoom(long id) {
 
         if (!(repo.existsById(id))) {
@@ -69,6 +87,8 @@ public class RoomService {
             return false;
 
         }
+
+        repo.deleteById(id);
 
         return true;
 
@@ -108,12 +128,15 @@ public class RoomService {
 
     // CRUD para ThreadChats
 
-    public void saveThread(Room room, ThreadChat thread) {
+    public Room saveThread(Room room, ThreadChat thread) {
 
         room.getThreadChats().add(thread);
-        repo.save(room);
+
+        return room;
 
     }
+
+    // add removeThread
 
     public List<ThreadChat> getThreads(Room room) {
 

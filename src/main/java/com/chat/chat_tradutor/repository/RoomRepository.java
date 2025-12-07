@@ -12,6 +12,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     // metodo de listagem por nome/futura barra de pesquisa
 
     Optional<Room> findByName(String name);
+    // talvez sobrescreva todos
+    //List<Room> findById(Long id);
+    List<Room> findAllByCreatorId(Long creatorId);
 
     List<Room> findByDescription(String description);
 

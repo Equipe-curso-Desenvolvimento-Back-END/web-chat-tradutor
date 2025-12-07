@@ -7,6 +7,12 @@
        <div>  <!--- Div box cadastro -->
         <h2>Remove room</h2> <!-- colocar em ingles temp -->
             <form method="post">
+
+            <div th:if="${deleteRoomError}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${deleteRoomError}"></p>
+            </div>
+
             <div> <!--- Campo temporario Em breve tera forma de click por nome de lista -->
                 <label for="username">Name Room</label><br>
                 <input type="text" name="name" id="name" placeholder="Write the name room here!">

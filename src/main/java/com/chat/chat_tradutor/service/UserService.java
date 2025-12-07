@@ -27,7 +27,7 @@ public class UserService {
 
         if (name.length() > UserConstants.MAX_SIZE_NAME || name.length() <= 0) {
 
-            throw new RuntimeException("Nome fora das normas");
+            return false;
 
         }
 
@@ -39,7 +39,7 @@ public class UserService {
 
         if (email.length() > UserConstants.MAX_SIZE_EMAIL || email.length() <= 0) {
 
-            throw new RuntimeException("Email fora das normas");
+            return false;
 
         }
 
@@ -72,7 +72,7 @@ public class UserService {
 
         if (!(m.find())) {
 
-            throw new RuntimeException("Senha fora dos padroes");
+            return false;
 
         }
 
@@ -87,7 +87,7 @@ public class UserService {
 
         if (repo.existsByName(user.getName()) || repo.existsByEmail(user.getEmail()) || repo.existsByPassword(user.getPassword())) {
 
-            throw new RuntimeException("Usuario ja existe!");
+            return null;
 
         }
 
@@ -109,7 +109,7 @@ public class UserService {
 
         }
 
-        throw new RuntimeException("Email ou Senha incorreta!");
+        return null;
 
     }
 
@@ -159,6 +159,5 @@ public class UserService {
 
     }
 
-    // add outros cruds e tratamentos
 
 }

@@ -107,6 +107,7 @@ public class UserController {
             }
 
             session.setAttribute("user",local);
+            session.setAttribute("userId",local.getId());
 
         }catch(Exception e) {
 

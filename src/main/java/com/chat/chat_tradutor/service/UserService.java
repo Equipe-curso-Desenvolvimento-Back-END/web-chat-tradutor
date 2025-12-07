@@ -115,7 +115,7 @@ public class UserService {
 
     // testing to read
     // ainda nao testando
-    public User readUser(long id, User user) {
+    public User readUser(long id) {
 
         return repo.findById(id).orElse(null);
 

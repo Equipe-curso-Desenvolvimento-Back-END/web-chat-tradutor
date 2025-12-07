@@ -33,6 +33,7 @@ public class Room implements Serializable {
     private long id;
     private String name;
     private String description;
+    private Long creatorId;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -43,7 +44,7 @@ public class Room implements Serializable {
 
     )
 
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ThreadChat> threadChats;
@@ -54,12 +55,13 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(String name, String description, List<User> users, List<ThreadChat> threadChats) {
+    public Room(String name, String description, List<User> users, List<ThreadChat> threadChats, Long creatorId) {
 
         this.name = name;
         this.description = description;
         this.users = users;
         this.threadChats = threadChats;
+        this.creatorId = creatorId;
 
     }
 
@@ -109,6 +111,18 @@ public class Room implements Serializable {
     public List<ThreadChat> getThreadChats() {
 
         return threadChats;
+
+    }
+
+    public Long getCreatorId() {
+
+        return creatorId;
+
+    }
+
+    public void setCreatorId(Long creatorId) {
+
+        this.creatorId = creatorId;
 
     }
 

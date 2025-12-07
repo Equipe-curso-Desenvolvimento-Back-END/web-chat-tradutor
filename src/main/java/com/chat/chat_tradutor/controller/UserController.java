@@ -5,19 +5,17 @@ import com.chat.chat_tradutor.service.UserService;
 import com.chat.chat_tradutor.model.User;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.validation.BindingResult;
 
-//import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.stereotype.Controller;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 
-// para teste
-
-import com.chat.chat_tradutor.config.DevConstants;
+import com.chat.chat_tradutor.common.UserConstants;
 
 @Controller
 public class UserController {
@@ -26,98 +24,77 @@ public class UserController {
 
     public UserController(UserService service) {
 
-        DevConstants.devkit = DevConstants.ON;
-
         this.service = service;
 
     }
 
     @PostMapping("/register")
-    public String createUser(@ModelAttribute User user, BindingResult result) {
+    public String createUser(@ModelAttribute User user,
+            BindingResult result,
+            RedirectAttributes flash) {
 
         if(result.hasErrors()) {
 
-            // temp retornar a main index/home
-            return "redirect:/";
 
+            return "redirect:/?error=true";
         }
 
-        // For testing
-        if (DevConstants.devkit == DevConstants.ON) {
+        if (!(service.validName(user.getName()))) {
 
-
-            System.out.println("Nome: "+user.getName());
-            System.out.println("email: "+user.getEmail());
-            System.out.println("Senha: "+user.getPassword());
-            System.out.println("Nacionalidade: "+user.getNationality());
-            System.out.println("Data Cadastro: "+user.getRegistrationDate());
-
-        }
-
-
-        // try catch temp para testes
-        try{
-
-            service.validName(user.getName());
-            service.validEmail(user.getEmail());
-            service.validPassword(user.getPassword());
-
-            User teste = service.saveUser(user);
-
-        }catch(Exception e) {
-
-            e.printStackTrace();
+            flash.addFlashAttribute("namedError",String.format("Siga os padrões aconselhados. Tamanho máximo de %d caracteres :0 ",UserConstants.MAX_SIZE_NAME));
 
             return "redirect:/register";
 
         }
+
+        if (!(service.validEmail(user.getEmail()))) {
+
+            flash.addFlashAttribute("emailError",String.format("Siga os padrões aconselhados. Sempre usar @ e máximo de %d caracteres :w ",UserConstants.MAX_SIZE_EMAIL));
+
+            return "redirect:/register";
+
+        }
+
+
+        if (!(service.validPassword(user.getPassword()))) {
+
+            flash.addFlashAttribute("passwordError",String.format("Siga os padrões aconselhados. Minimo de %d caracteres, pelo menos %d letra maiuscula, pelo menos %d minuscula e lista da caracteres disponiveis: & $ ! * #",8,1,1));
+
+            return "redirect:/register";
+
+        }
+
+        User teste = service.saveUser(user);
 
         return "redirect:/login";
 
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, BindingResult result, HttpSession session) {
+    public String login(@ModelAttribute User user,
+            BindingResult result,
+            HttpSession session,
+            RedirectAttributes flash) {
 
         if(result.hasErrors()) {
 
-            // temp retornar a main index/home
-            return "redirect:/register";
+            return "redirect:/?error=true";
 
         }
 
-        // temporario ate colocar tags de mensagem jtml
-        try {
+        User local = service.loginUser(user);
 
-            User local = service.loginUser(user);
+        if (local == null) {
 
-            // security method avaible
-            if (local == null) {
+            flash.addFlashAttribute("loginError","Email ou Senha incorretos.");
 
-                return "redirect:/login?error=true";
-
-            }
-
-            if (DevConstants.devkit == DevConstants.ON) {
-
-                System.out.println("Identificador: "+local.getId());
-                System.out.println("Data do registro: "+local.getRegistrationDate());
-                System.out.println("Conta(nome): "+local.getName()+" logada!");
-
-            }
-
-            session.setAttribute("user",local);
-            session.setAttribute("userId",local.getId());
-
-        }catch(Exception e) {
-
-            return "redirect:/login";
+            return "redirect:/login?error=true";
 
         }
 
-        // salvar a sessao
+        session.setAttribute("user",local);
+        session.setAttribute("userId",local.getId());
 
-        // temp ira para sala room
         return "redirect:/rooms";
 
     }

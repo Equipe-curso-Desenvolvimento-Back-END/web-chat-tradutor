@@ -16,7 +16,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.validation.BindingResult;
 
+import org.springframework.ui.Model;
+
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 // Vai permitir que exita rooms/create rooms/room/{id} etc...
 @Controller
@@ -34,15 +42,31 @@ public class RoomController {
     }
 
     // sempre implementar o security nas novas paginas fixas
-    @GetMapping("")
-    public String roomsHome(HttpSession session) {
+    //@GetMapping("")
+    //public String roomsHome(HttpSession session) {
 
-        if (session.getAttribute("user") == null) {
+        //if (session.getAttribute("user") == null) {
 
             // passivo de falha
-            return "redirect:/login";
+       //     return "redirect:/login";
 
-        }
+      //  }
+
+     //   return "rooms/index";
+
+    //}
+
+    // metodo de listagem grafica
+
+    // Novo render main
+    @GetMapping
+    public String listRooms(Model model) {
+
+        // listar todas as rooms
+
+        List<Room> rooms = service.findAll();
+
+        model.addAttribute("roomsList",rooms);
 
         return "rooms/index";
 
@@ -80,6 +104,19 @@ public class RoomController {
         session.invalidate();
 
         return "redirect:/login";
+
+    }
+
+    @PostMapping("/remove/{roomId}")
+    public String deleteRoom(@PathVariable("roomId") Long roomId, RedirectAttributes flash) {
+
+        service.deleteRoom(roomId);
+
+        flash.addFlashAttribute("acertMessage", "Sala removida com sucesso!");
+
+        // Para atualizar o HTTP forcar get
+        return "redirect:/rooms";
+
 
     }
 

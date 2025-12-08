@@ -38,7 +38,7 @@
                 <strong>Nacionalidade:</strong> 
                 <span th:text="${myClientInfo.nationality}">pt-BR</span>
             </p>
-            
+
         </div>
 
         <h2>My Rooms</h2>    
@@ -57,7 +57,7 @@
 
             <!-- Padrao limpo sem style -->
 
-            <a th:href="@{/room/{roomId}(roomId=${room.id})}">
+            <a th:href="@{/chat/{roomId}(roomId=${room.id})}">
            
                 <span th:text="${room.name}">Nome da Sala</span><br>
                 <span th:text="${room.description}">Descricao da salsa</span><br>

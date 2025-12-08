@@ -6,6 +6,8 @@ import com.chat.chat_tradutor.service.UserService;
 import com.chat.chat_tradutor.model.Room;
 import com.chat.chat_tradutor.model.User;
 
+import com.chat.chat_tradutor.common.UserConstants;
+
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,17 +96,21 @@ public class RoomController {
 
         List<Room> myRooms = service.findAllByCreatorId(creatorId);
 
+        // cadastrado a lista no model da raiz /myaccount
+        model.addAttribute("myRoomsList",myRooms);
+
+        // codigos seguintes de cremento de variavel
+        // na instancia de modal ja existente
+
         if (myRooms.isEmpty()) {
 
-            flash.addFlashAttribute("myAccountEmptyError", "Você ainda não cadastrou nem uma sala!");
+            model.addAttribute("myAccountEmptyError", "Você ainda não cadastrou nem uma sala!");
 
             return "rooms/myaccount";
 
         }
 
-        model.addAttribute("myRoomsList",myRooms);
-
-        flash.addFlashAttribute("myAccountConfirm", "Resgate das suas salas foi um sucesso!");
+        model.addAttribute("myAccountConfirm", "Resgate das suas salas foi um sucesso!");
 
         return "rooms/myaccount";
 
@@ -195,13 +201,32 @@ public class RoomController {
 
         room.setCreatorId(creatorId);
 
+        // setando nome e email na room
+
+        User local = userService.readUser(creatorId);
+
+        room.setCreatorName(local.getName());
+        room.setCreatorEmail(local.getEmail());
+        room.setCreatorNationality(local.getNationality());
+
+        local.setLimitRoom(local.getLimitRoom()+1);
+
+        // verificando se passou o limit de salas por usuario
+        if (local.getLimitRoom() > UserConstants.MAX_ROOMS) {
+
+            flash.addFlashAttribute("createRoomError",String.format("Você não pode criar mais salas, já está no seu máximo de %d",UserConstants.MAX_ROOMS));
+
+            return "redirect:/rooms/create";
+
+        }
+
         // Nessa linha nos usamos o metodo de servico da sala
         // para salvar a sala com o seu respectivo dono representado
         // pelo seu id = creatorId
         // E retornado o objeto da sala de cadastro com o primeiro dono
         // e usuario dentro da sala, assim sendo cadastrado no banco
 
-        Room saved = service.saveRoom(service.saveUser(room,userService.readUser(creatorId)));
+        Room saved = service.saveRoom(service.saveUser(room,local));
 
         if (saved == null) {
 
@@ -211,12 +236,9 @@ public class RoomController {
 
         }
 
-        // temp log de verificao
-        System.out.println("Repositorio: "+saved.getName()+" Cadastrado");
-        System.out.println("Dono: "+userService.readUser(creatorId).getName()+" !!!");
+        flash.addFlashAttribute("createRoomConfirm", String.format("Criação da sala \"%s\", foi um sucesso! Volte para o menu global de salas ou para seu pervil em \"My Account\" para acessar!",saved.getName()));
 
-        // futuramente ira ser a sala com n valor id
-        return "redirect:/rooms"; // futuro caminho /rooms/room(chat)/{id}
+        return "redirect:/rooms/create";
 
     }
 
@@ -256,7 +278,7 @@ public class RoomController {
 
             }
 
-            room.setCreatorId(creatorId);
+            User local = userService.readUser(creatorId);
 
             if (!(creatorId.equals(room.getCreatorId()))) {
 
@@ -264,6 +286,16 @@ public class RoomController {
                 flash.addFlashAttribute("deleteRoomError", "Não é possivel apagar a sala, você não é o dono!");
 
                 return "redirect:/rooms/remove";
+
+            }
+
+            // Caso for necessario e possivel adicionar
+            // um campo de redundancia para verificar se o usuario
+            // possui alguma sala, evitando valores negativos. Mas claro o Id ja cobra essa protecao
+
+            if (local.getLimitRoom() > 0) {
+
+                local.setLimitRoom(local.getLimitRoom()-1);
 
             }
 

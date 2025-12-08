@@ -34,6 +34,9 @@ public class Room implements Serializable {
     private String name;
     private String description;
     private Long creatorId;
+    private String creatorName;
+    private String creatorEmail;
+    private String creatorNationality;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -55,13 +58,16 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(String name, String description, List<User> users, List<ThreadChat> threadChats, Long creatorId) {
+    public Room(String name, String description, List<User> users, List<ThreadChat> threadChats, Long creatorId, String creatorName, String creatorEmail, String creatorNationality) {
 
         this.name = name;
         this.description = description;
         this.users = users;
         this.threadChats = threadChats;
         this.creatorId = creatorId;
+        this.creatorName = creatorName;
+        this.creatorEmail = creatorEmail;
+        this.creatorNationality = creatorNationality;
 
     }
 
@@ -123,6 +129,42 @@ public class Room implements Serializable {
     public void setCreatorId(Long creatorId) {
 
         this.creatorId = creatorId;
+
+    }
+
+    public String getCreatorName() {
+
+        return creatorName;
+
+    }
+
+    public void setCreatorName(String creatorName) {
+
+        this.creatorName = creatorName;
+
+    }
+
+    public String getCreatorEmail() {
+
+        return creatorEmail;
+
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+
+        this.creatorEmail = creatorEmail;
+
+    }
+
+    public String getCreatorNationality() {
+
+        return creatorNationality;
+
+    }
+
+    public void setCreatorNationality(String creatorNationality) {
+
+        this.creatorNationality = creatorNationality;
 
     }
 

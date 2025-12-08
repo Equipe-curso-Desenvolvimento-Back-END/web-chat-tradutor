@@ -17,4 +17,8 @@ public final class UserConstants {
 
     public static final int MAX_SIZE_NAME = 50;
 
+    // Roons limit
+
+    public static final int MAX_ROOMS = 1;
+
 }

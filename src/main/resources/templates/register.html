@@ -10,6 +10,7 @@
 
             <div th:if="${namedError}" class="alert alert-danger">
                 <h3>Falha de Regra de Negócio</h3>
+                
                 <p th:text="${namedError}"></p>
             </div>
 
@@ -28,9 +29,9 @@
                 <input type="email" name="email" id="email" placeholder="Write your email here!">
             </div>
 
-            <div th:if="${password}" class="alert alert-danger">
+            <div th:if="${passwordError}" class="alert alert-danger">
                 <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${password}"></p>
+                <p th:text="${passwordError}"></p>
             </div>
 
             <div>

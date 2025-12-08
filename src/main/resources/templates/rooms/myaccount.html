@@ -39,7 +39,18 @@
             <a th:href="@{/room/{roomId}(roomId=${room.id})}">
            
                 <span th:text="${room.name}">Nome da Sala</span><br>
-                <span th:text="${room.description}">Nome da Sala</span><br>
+                <span th:text="${room.description}">Descricao da salsa</span><br>
+                
+                <div class="creator-details">
+                    <small>
+                Criador: 
+                <strong th:text="${room.creatorName}">[Nome do Criador]</strong> 
+                Email:
+                <span th:text="${room.creatorEmail}">[email@exemplo.com]</span>
+                Nacionalidade:
+                <span th:text="${room.creatorNationality}">[pt-BR]</span>
+                  </small>
+                </div>
 
             </a>
 

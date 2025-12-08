@@ -26,6 +26,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String nationality;
+    private int limitRoom;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime registrationDate;
@@ -33,12 +34,13 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String email, String password, String nationality) {
+    public User(String name, String email, String password, String nationality, int limitRoom) {
 
         this.name = name;
         this.email = email;
         this.password = password;
         this.nationality = nationality;
+        this.limitRoom = limitRoom;
 
     }
 
@@ -111,6 +113,18 @@ public class User implements Serializable {
     public LocalDateTime getRegistrationDate() {
 
         return registrationDate;
+
+    }
+
+    public int getLimitRoom() {
+
+        return limitRoom;
+
+    }
+
+    public void setLimitRoom(int limitRoom) {
+
+        this.limitRoom = limitRoom;
 
     }
 

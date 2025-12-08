@@ -1,0 +1,107 @@
+/* fontes da página */
+
+@import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moulpali&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jomhuria&display=swap');
+
+
+/*   font-family: "Odor Mean Chey", serif;*/
+/*   font-family: "Moulpali", sans-serif; */
+/* font-family: "Jomhuria", serif; */
+
+/* cores do site
+#0060B6
+#D2ECFF
+#0077FF
+#4CAF50
+#9ED7FF
+*/
+
+
+.lista{
+    margin: 2rem 7rem;
+    background-color: white;
+    border-radius: 2rem;
+    box-shadow: 0 0 .5rem rgb(0, 124, 143);
+    padding: 2rem;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: .2rem solid #4CAF50;
+    border-radius: .2rem;
+}
+
+.menu h3{
+    font-family: "Odor Mean Chey", serif;
+    font-size: 2.5rem;
+    color: #4CAF50;
+    position: relative;
+    left: 8rem;
+}
+
+.criarr {
+    border: none;
+    font-family: "Moulpali", sans-serif;
+    font-size: 1.2rem;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    background-color: #ffffff00;
+    color: #4CAF50;
+
+}
+
+.criarr:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+
+.removerr {
+    border: none;
+    font-family: "Moulpali", sans-serif;
+    font-size: 1.2rem;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    background-color: #ffffff00;
+    color: #4CAF50;
+}
+
+.removerr:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn {
+    border-radius: 1rem;
+    cursor: pointer;
+    padding: .5rem 1rem;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.btn:hover {
+    background-color: #9aff9d90;
+    transition: .8s;
+}
+
+.salas {
+    height: 50rem;
+    padding: 1rem;
+}
+
+.cont {
+    background-color: #DBFFB1;
+    width: 100%;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+}
+
+.salas span {
+    font-size: 2rem;
+    font-family: "Odor Mean Chey", serif;
+    color: #4CAF50;
+}

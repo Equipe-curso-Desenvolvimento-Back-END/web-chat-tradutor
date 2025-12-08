@@ -65,6 +65,25 @@ public class UserService {
 
     }
 
+    public boolean domainIsValid(String password) {
+
+        int indexAt = password.indexOf(UserConstants.ESPECIAL_CHAR_EMAIL);
+        String address = password.substring(indexAt+1,password.length());
+
+        for (String othersAd : UserConstants.EMAILS) {
+
+            if (address.equals(othersAd)) {
+
+                return true;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
     public boolean validPassword(String password) {
 
         Pattern p = Pattern.compile(UserConstants.RENGEX);

@@ -72,7 +72,16 @@ public class UserController {
 
         }
 
-        service.saveUser(new User(name,email,password,nationaliy,0));
+        verify = service.domainIsValid(email);
+
+        if (!(verify)) {
+
+            flash.addFlashAttribute("passwordError","Dominio cadastrado errado ou não valido!");
+            return "redirect:/register";
+
+        }
+
+        service.saveUser(new User(name.trim(),email.trim(),password.trim(),nationaliy,0));
 
         return "redirect:/login";
 

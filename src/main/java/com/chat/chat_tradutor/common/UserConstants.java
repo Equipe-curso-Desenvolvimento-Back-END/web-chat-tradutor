@@ -13,6 +13,27 @@ public final class UserConstants {
 
     public static final char ESPECIAL_CHAR_EMAIL = '@';
 
+    public static final String[] EMAILS = {
+
+        "gmail.com",
+        "outlook.com",
+        "hotmail.com",
+        "yahoo.com",
+        "live.com",
+        "icloud.com",
+        "proton.me",
+        "protonmail.com",
+        "aol.com",
+        "msn.com",
+        "mail.com",
+        "yandex.com",
+        "fastmail.com",
+        "zoho.com",
+        "gmx.com",
+        "hey.com"
+
+    };
+
     // Name definido no RN
 
     public static final int MAX_SIZE_NAME = 50;

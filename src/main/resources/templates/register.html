@@ -9,35 +9,41 @@
             <form method="post">
 
             <div th:if="${namedError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                
+                <h3>Falha de Regra de Negócio</h3>                
                 <p th:text="${namedError}"></p>
             </div>
 
-            <div> <!--- div para o campo usuario-->
-                <label for="username">User name</label><br>
-                <input type="text" name="name" id="username" placeholder="Write your name here!">
+             <div th:if="${passwordError}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${passwordError}"></p>
             </div>
 
             <div th:if="${emailError}" class="alert alert-danger">
                 <h3>Falha de Regra de Negócio</h3>
                 <p th:text="${emailError}"></p>
             </div>
+            
+
+            <div> <!--- div para o campo usuario-->
+                <label for="username">User</label><br>
+                <input type="text" name="name" id="name" placeholder="Write your name here!">
+            </div>
 
             <div> <!-- div para o campo usuario-->
                 <label for="email">E-mail</label><br>
                 <input type="email" name="email" id="email" placeholder="Write your email here!">
             </div>
-
-            <div th:if="${passwordError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${passwordError}"></p>
-            </div>
-
+            
             <div>
                 <label for="password">Password</label><br>
                 <input type="password" name="password" id="password" placeholder="Write your password here!">
             </div>
+
+            <div>
+                <label for="password">Confirm Password</label><br>
+                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Write your password here!">
+            </div>
+
             <div> <!--- Div para o campo de dropbox-->
                 <select name="nationality" id="nationality">
                     <option value="pt-BR">Português (Brasil)</option>

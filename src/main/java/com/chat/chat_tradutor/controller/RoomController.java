@@ -100,9 +100,12 @@ public class RoomController {
         }
 
         List<Room> myRooms = service.findAllByCreatorId(creatorId);
+        User local = userService.readUser(creatorId);
 
         // cadastrado a lista no model da raiz /myaccount
         model.addAttribute("myRoomsList",myRooms);
+        // cadastrado a lista de
+        model.addAttribute("myClientInfo",local);
 
         // codigos seguintes de cremento de variavel
         // na instancia de modal ja existente

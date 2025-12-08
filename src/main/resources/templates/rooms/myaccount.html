@@ -5,8 +5,6 @@
     <body>
         <!--- As tags <br> sao temporarias remover quando criar o .css --->
 
-        <h2>My Rooms</h2>
-
         <div th:if="${myAccountError}" class="alert alert-danger">
                 <h3>Falha de Regra de Negócio</h3>
                 <p th:text="${myAccountError}"></p>
@@ -21,7 +19,30 @@
                 <h3>Sucesso!</h3>
                 <p th:text="${myAccountConfirm}"></p>
         </div>
-    
+
+        <!--  DIV de info do usuario -->
+        <div>
+            <h1>My Account Info</h1>
+
+            <p>
+                <strong>Nome:</strong> 
+                <span th:text="${myClientInfo.name}">Nome do Usuário Aqui</span>
+            </p>
+
+            <p>
+                <strong>E-mail:</strong> 
+                <span th:text="${myClientInfo.email}">email@dominio.com</span>
+            </p>
+
+            <p>
+                <strong>Nacionalidade:</strong> 
+                <span th:text="${myClientInfo.nationality}">pt-BR</span>
+            </p>
+            
+        </div>
+
+        <h2>My Rooms</h2>    
+
         <!-- Leituro de registros do banco, le e lista em .html -->
         <div th:each="room : ${myRoomsList}" style="margin-bottom: 10px;">
             

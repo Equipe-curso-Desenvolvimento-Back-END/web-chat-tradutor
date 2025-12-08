@@ -116,6 +116,19 @@ public class RoomController {
 
     }
 
+    @GetMapping("/update")
+    public String createPageUpdate(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+
+            return "redirect:/login";
+
+        }
+
+        return "rooms/create";
+
+    }
+
     @GetMapping("/create")
     public String createPage(HttpSession session) {
 
@@ -313,6 +326,15 @@ public class RoomController {
             // Somente um redirect na funcao deve conter para esse formato
 
             return "redirect:/rooms/remove";
+
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute User user,
+            BindingResult result,
+            HttpSession session,
+            RedirectAttributes flash) {
+
 
     }
 

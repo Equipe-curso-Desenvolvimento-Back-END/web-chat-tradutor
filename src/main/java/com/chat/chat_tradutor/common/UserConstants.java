@@ -19,6 +19,6 @@ public final class UserConstants {
 
     // Roons limit
 
-    public static final int MAX_ROOMS = 1;
+    public static final int MAX_ROOMS = 5;
 
 }

@@ -2,6 +2,7 @@ package com.chat.chat_tradutor.service;
 
 import com.chat.chat_tradutor.repository.UserRepository;
 import com.chat.chat_tradutor.model.User;
+import com.chat.chat_tradutor.model.Room;
 
 import org.springframework.stereotype.Service;
 
@@ -193,6 +194,38 @@ public class UserService {
         repo.deleteById(user.getId());
 
         return true;
+
+    }
+
+    public User updateUser(User user) {
+
+        return repo.save(user);
+
+    }
+
+    public User saveRoom(User user,Room room) {
+
+        user.getRooms().add(room);
+
+        return user;
+
+    }
+
+    public User findByIdAndRoomsId(Long userId, Long roomId) {
+
+        return repo.findByIdAndRoomsId(userId,roomId);
+
+    }
+
+    public boolean existsByIdAndRoomsId(Long userId, Long roomId) {
+
+        return repo.existsByIdAndRoomsId(userId,roomId);
+
+    }
+
+    public boolean isUserMemberOfRoom(Long userId, Long roomId) {
+
+        return repo.isUserMemberOfRoom(userId, roomId);
 
     }
 

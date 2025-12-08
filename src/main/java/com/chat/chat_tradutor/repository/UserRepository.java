@@ -6,12 +6,17 @@ import com.chat.chat_tradutor.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    // metodos crud base
+    // associacao bidirecional
+    // possivel erro no tipo
+    User findByIdAndRoomsId(Long userId, Long  roomId);
 
     // to logical find
 
@@ -32,6 +37,14 @@ public interface UserRepository extends CrudRepository<User, Long> {
     boolean existsByPassword(String password);
 
     void deleteById(long id);
+
+    // bidirencional
+
+    boolean existsByIdAndRoomsId(Long userId, Long roomId);
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN TRUE ELSE FALSE END " +
+       "FROM User u JOIN u.rooms r " +
+       "WHERE u.id = :userId AND r.id = :roomId")
+    boolean isUserMemberOfRoom(@Param("userId") Long userId, @Param("roomId") Long roomId);
 
 }
 

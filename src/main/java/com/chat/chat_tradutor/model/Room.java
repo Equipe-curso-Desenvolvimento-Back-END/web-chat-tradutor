@@ -23,6 +23,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Set;
+import java.util.HashSet;
+
 @Entity
 public class Room implements Serializable {
 
@@ -47,7 +50,7 @@ public class Room implements Serializable {
 
     )
 
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ThreadChat> threadChats;
@@ -58,7 +61,7 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(String name, String description, List<User> users, List<ThreadChat> threadChats, Long creatorId, String creatorName, String creatorEmail, String creatorNationality) {
+    public Room(String name, String description, Set<User> users, List<ThreadChat> threadChats, Long creatorId, String creatorName, String creatorEmail, String creatorNationality) {
 
         this.name = name;
         this.description = description;
@@ -108,7 +111,14 @@ public class Room implements Serializable {
 
     }
 
-    public List<User> getUsers() {
+    // op
+    public void setUsers(Set<User> users) {
+
+        this.users = users;
+
+    }
+
+    public Set<User> getUsers() {
 
         return users;
 

@@ -21,7 +21,16 @@
 
             <!-- Padrao limpo sem style -->
 
-            <a th:href="@{/room/{roomId}(roomId=${room.id})}">
+            <!-- <a th:href="@{/room/{roomId}(roomId=${room.id})}">
+           
+                <span th:text="${room.name}">Nome da Sala</span><br>
+                <span th:text="${room.description}">Nome da Sala</span><br>
+
+            </a> --> 
+            <!-- Agora essa listagem ira direcionar para /chat em seu respectivo id -->
+            <!-- Ainda em testes -->
+             
+            <a th:href="@{/chat/{roomId}(roomId=${room.id})}">
            
                 <span th:text="${room.name}">Nome da Sala</span><br>
                 <span th:text="${room.description}">Nome da Sala</span><br>

@@ -333,6 +333,8 @@ public class RoomController {
 
             }
 
+            // Remover sala
+
             if (!(service.deleteRoom(room.getId()))) {
 
                 flash.addFlashAttribute("deleteRoomError", String.format("Não foi possivel remove a sala \"%d\"",room.getName()));

@@ -121,6 +121,12 @@ public class UserService {
 
     }
 
+    public User simplePatchUser(User user) {
+
+        return repo.save(user);
+
+    }
+
     // teste de atualizacao all
     public User patchUser(long id, User user) {
 

@@ -116,6 +116,8 @@ public class RoomController {
 
     }
 
+    // Atualizar room
+
     @GetMapping("/update")
     public String createPageUpdate(HttpSession session) {
 
@@ -125,7 +127,20 @@ public class RoomController {
 
         }
 
-        return "rooms/create";
+        return "rooms/update";
+
+    }
+
+    @GetMapping("/configaccount")
+    public String createPageMyAccountUpdate(HttpSession session) {
+
+        if (session.getAttribute("user") == null) {
+
+            return "redirect:/login";
+
+        }
+
+        return "rooms/configaccount";
 
     }
 
@@ -259,7 +274,8 @@ public class RoomController {
     public String deleteRoom(
             @RequestParam("name") String name,
             @RequestParam(name = "isConfirmed", required = false) boolean checkbox,
-            HttpSession session, RedirectAttributes flash) {
+            HttpSession session,
+            RedirectAttributes flash) {
 
             Room room = service.findByName(name);
 
@@ -330,13 +346,191 @@ public class RoomController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute User user,
-            BindingResult result,
+    public String updateRoom(@RequestParam("oldname") String oldName,
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
             HttpSession session,
             RedirectAttributes flash) {
 
+        if (oldName.length() == 0) {
+
+            flash.addFlashAttribute("updateRoomError","Passe o nome da sala que deseja alterar e seus novos parametros");
+
+            return "redirect:/rooms/update";
+
+        }
+
+        // Verificar se existe o room
+
+        Room room = service.findByName(oldName);
+
+        if (room == null) {
+
+            flash.addFlashAttribute("updateRoomError","Sala não encontrada!");
+
+        }
+
+        Long creatorId = (Long) session.getAttribute("userId");
+
+        if (!(creatorId.equals(room.getCreatorId()))) {
+
+            flash.addFlashAttribute("updateRoomError","Não é possivel atualizar a sala, você não é o dono!");
+
+            return "redirect:/rooms/update";
+
+        }
+
+        // formato temporario
+
+        if (name.length() == 0 && description.length() == 0) {
+
+            flash.addFlashAttribute("updateRoomError","Campos de atualização não foram passados. Nada foi alterado!");
+
+            return "redirect:/rooms/update";
+
+        }
+
+        if (room.getName().equals(name) && room.getDescription().equals(description)) {
+
+            flash.addFlashAttribute("updateRoomAlert","Em campo \"nome\" e \"description\" estão iguais aos originais!");
+
+            return "redirect:/rooms/update";
+
+        }
+
+        if (name.length() == 0) {
+
+            room.setDescription(description);
+
+        }else if (description.length() == 0) {
+
+            room.setName(name);
+
+        }else {
+
+            room.setName(name);
+            room.setDescription(description);
+
+        }
+
+        service.updateRoom(room);
+
+
+        flash.addFlashAttribute("updateRoomConfirm","Atualizações foram um sucesso!");
+        return "redirect:/rooms/update";
 
     }
+
+    @PostMapping("/configaccount")
+    public String updateMyAccount(@RequestParam("name") String name,
+            @RequestParam("password") String password,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("nationality") String nationality,
+            HttpSession session,
+            RedirectAttributes flash) {
+
+                Long creatorId = (Long) session.getAttribute("userId");
+
+                User local = userService.readUser(creatorId);
+
+                if (local == null) {
+
+                    flash.addFlashAttribute("updateAccountError","Conta não registrada!");
+
+                    return "redirect:/rooms/configaccount";
+
+                }
+
+                if (!(local.getPassword().equals(password)) && newPassword.length() > 0) {
+
+                    flash.addFlashAttribute("updateAccountAlert","Senha passada da conta não corresponde a senha real!");
+
+                    return "redirect:/rooms/configaccount";
+
+                }
+
+                if (name.length() == 0 && password.length() == 0 && newPassword.length() == 0) {
+
+                    flash.addFlashAttribute("updateAccountAlert","Campos vazios!");
+
+                }
+
+
+                if (password.length() == 0 && password.length() < newPassword.length() || newPassword.length() == 0 && newPassword.length() < password.length() ) {
+
+
+                    flash.addFlashAttribute("updateAccountError","Deve-se ter preenchido ambos campos de \"senha\" para alteracao");
+
+                    return "redirect:/rooms/configaccount";
+
+                }
+
+                if (name.equals(local.getName())) {
+
+
+                    flash.addFlashAttribute("updateAccountAlert","O campo \"nome\" está igual a antigo");
+
+                    return "redirect:/rooms/configaccount";
+
+                }
+
+                if (name.length() == 0) {
+
+                    if (newPassword.length() <= 0) {
+
+                        // testar
+                        local.setPassword(local.getPassword());
+
+                    }else {
+
+                        local.setPassword(newPassword);
+
+                    }
+
+                }else if (password.length() == 0 && newPassword.length() == 0) {
+
+                    local.setName(name);
+                    local.setPassword(local.getPassword());
+
+                }
+
+                local.setNationality(nationality);
+
+                List<Room> rooms = service.findAllByCreatorId(creatorId);
+
+
+                // atualizando as salas com a mudanca
+                if (!(rooms.isEmpty())) {
+
+                    for (Room i : rooms) {
+
+                        i.setCreatorName(local.getName());
+                        i.setCreatorNationality(local.getNationality());
+
+                        // Nao recomendando
+                        service.updateRoom(i);
+
+                    }
+
+
+                }
+
+
+                if (!(userService.validPassword(newPassword)) && newPassword.length() > 0) {
+
+                    flash.addFlashAttribute("updateAccountConfirm","Senha não é valida!");
+
+                    return "redirect:/rooms/configaccount";
+
+                }
+
+                userService.simplePatchUser(local);
+
+                flash.addFlashAttribute("updateAccountConfirm","Alterações do usuario feitas com exito!");
+
+                return "redirect:/rooms/configaccount";
+
+            }
 
 }
 

@@ -44,6 +44,12 @@ public class RoomService {
 
     }
 
+    public Room updateRoom(Room room) {
+
+        return repo.save(room);
+
+    }
+
     public List<Room> findAll() {
 
         return repo.findAll();

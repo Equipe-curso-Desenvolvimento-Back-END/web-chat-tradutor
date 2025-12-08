@@ -80,6 +80,18 @@ public class UserService {
 
     }
 
+    public boolean verifyEqualitPassword(String password, String confirmPassword) {
+
+        if (!(password.equals(confirmPassword))) {
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+
     // posteriormente
     public User saveUser(User user) throws RuntimeException {
 

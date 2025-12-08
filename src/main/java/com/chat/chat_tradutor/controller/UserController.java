@@ -6,6 +6,7 @@ import com.chat.chat_tradutor.model.User;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.validation.BindingResult;
 
@@ -29,17 +30,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String createUser(@ModelAttribute User user,
-            BindingResult result,
+    public String createUser(@RequestParam("name") String name,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("confirmPassword") String confirmPassword,
+            @RequestParam("nationality") String nationaliy,
             RedirectAttributes flash) {
 
-        if(result.hasErrors()) {
-
-
-            return "redirect:/?error=true";
-        }
-
-        if (!(service.validName(user.getName()))) {
+        if (!(service.validName(name))) {
 
             flash.addFlashAttribute("namedError",String.format("Siga os padrões aconselhados. Tamanho máximo de %d caracteres :0 ",UserConstants.MAX_SIZE_NAME));
 
@@ -47,7 +45,7 @@ public class UserController {
 
         }
 
-        if (!(service.validEmail(user.getEmail()))) {
+        if (!(service.validEmail(email))) {
 
             flash.addFlashAttribute("emailError",String.format("Siga os padrões aconselhados. Sempre usar @ e máximo de %d caracteres :w ",UserConstants.MAX_SIZE_EMAIL));
 
@@ -56,7 +54,7 @@ public class UserController {
         }
 
 
-        if (!(service.validPassword(user.getPassword()))) {
+        if (!(service.validPassword(password))) {
 
             flash.addFlashAttribute("passwordError",String.format("Siga os padrões aconselhados. Minimo de %d caracteres, pelo menos %d letra maiuscula, pelo menos %d minuscula e lista da caracteres disponiveis: & $ ! * #",8,1,1));
 
@@ -64,7 +62,17 @@ public class UserController {
 
         }
 
-        User teste = service.saveUser(user);
+        boolean verify = service.verifyEqualitPassword(password,confirmPassword);
+
+        if (!(verify)) {
+
+            flash.addFlashAttribute("passwordError","Senha de registro não é igual a senha de verificação!");
+
+            return "redirect:/register";
+
+        }
+
+        service.saveUser(new User(name,email,password,nationaliy,0));
 
         return "redirect:/login";
 

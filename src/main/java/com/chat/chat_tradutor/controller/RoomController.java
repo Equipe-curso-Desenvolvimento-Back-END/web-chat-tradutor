@@ -62,9 +62,14 @@ public class RoomController {
 
     // Novo render main
     @GetMapping
-    public String listRooms(Model model) {
+    public String listRooms(Model model,
+            HttpSession session) {
 
-        // listar todas as rooms
+        if (session.getAttribute("user") == null) {
+
+            return "redirect:/login";
+
+        }
 
         List<Room> rooms = service.findAll();
 

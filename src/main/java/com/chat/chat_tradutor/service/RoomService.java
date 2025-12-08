@@ -103,6 +103,7 @@ public class RoomService {
     // CRUD para Users em ROOM
 
     // pode gerar erro de escrita
+    // Outro momento refatorar para coesao de codigo
     public Room saveUser(Room room, User user) {
 
         if (repo.existsByName(user.getName())) {
@@ -111,7 +112,13 @@ public class RoomService {
 
         }
 
-        room.getUsers().add(user);
+        boolean state = room.getUsers().add(user);
+
+        if (state == false) {
+
+            return null;
+
+        }
 
         return room;
 

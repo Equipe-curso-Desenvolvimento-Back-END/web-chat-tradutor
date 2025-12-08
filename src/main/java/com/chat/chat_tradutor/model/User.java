@@ -8,11 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToMany;
 
 import java.time.LocalDateTime;
 //import java.time.LocalDate;
 
 import java.time.temporal.ChronoUnit;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import java.util.Objects;
 
 @Entity
 public class User implements Serializable {
@@ -30,6 +36,9 @@ public class User implements Serializable {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime registrationDate;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Room> rooms = new ArrayList<>();
 
     public User() {
     }
@@ -49,6 +58,27 @@ public class User implements Serializable {
 
         this.registrationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
+    }
+
+    @Override
+    public int hashCode() {
+        // A chave primária (ID) é a identidade do objeto
+        if (id == 0) { // Se ainda não foi persistido
+            return Objects.hash(email); // Um fallback decente
+        }
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User other = (User) obj;
+        // Compara apenas pelo ID. Se ambos forem 0, compara por um campo único (ex: email)
+        if (id == 0 && other.id == 0) {
+            return Objects.equals(email, other.email);
+        }
+        return id == other.id;
     }
 
     public long getId() {
@@ -125,6 +155,18 @@ public class User implements Serializable {
     public void setLimitRoom(int limitRoom) {
 
         this.limitRoom = limitRoom;
+
+    }
+
+    public List<Room> getRooms()  {
+
+        return rooms;
+
+    }
+
+    public void setRooms(List<Room> rooms) {
+
+        this.rooms = rooms;
 
     }
 

@@ -1,0 +1,93 @@
+/* fontes da página */
+
+@import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moulpali&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jomhuria&display=swap');
+
+
+/*   font-family: "Odor Mean Chey", serif;*/
+/*   font-family: "Moulpali", sans-serif; */
+/*   font-family: "Jomhuria", serif; */
+
+/* cores do site
+#0060B6
+#D2ECFF
+#0077FF
+#4CAF50
+*/
+
+
+.logar {
+    box-shadow: 0 0 .7rem rgb(0, 124, 143);
+    background-color: #9ED7FF;
+    width: 45rem;
+    height: 50rem;
+    gap: 1rem;
+}
+
+
+.logar h2{
+    font-family: "Odor Mean Chey", serif;
+    font-size: 4rem;
+    color: #0060B6;
+}
+
+label {
+    font-family: "Moulpali", sans-serif;
+    font-size: 1.5rem;
+    color: #00417a;
+}
+
+.loginb {
+    margin-top: 3rem;
+    width: 12rem;
+    font-family: "Odor Mean Chey", serif;
+    cursor: pointer;
+    font-size: 1.5rem;
+    letter-spacing: .2rem;
+    padding: .5rem 1rem;
+    color:white;
+    border: 2px solid #0a66c2;
+    background-color: #0a66c2;
+}
+
+.loginb:hover {
+    color: #0a66c2;
+    background-color: white;
+}
+
+.cad{
+    font-family: "Moulpali", sans-serif;
+    color:#0a66c2;
+    font-size: 1.5rem;
+    text-decoration: none;
+    position: relative;
+    bottom: -3rem;
+}
+
+span {
+    color: #4CAF50;
+    font-family: "Moulpali", sans-serif;
+    font-size: 1.5rem;
+}
+
+.btn {
+    position: relative;
+    bottom: -4rem;
+    width: 18rem;
+    font-family: "Odor Mean Chey", serif;
+    cursor: pointer;
+    font-size: 1.5rem;
+    letter-spacing: .2rem;
+    padding: .5rem 1rem;
+    color:white;
+    border: 2px solid #0a66c2;
+    background-color: #0a66c2;
+}
+
+.btn:hover {
+    background-color: #4CAF50;
+    color:white;
+    border: 2px solid #4CAF50;
+}

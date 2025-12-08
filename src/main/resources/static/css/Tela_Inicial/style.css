@@ -1,0 +1,214 @@
+/* Reset da página */
+
+/* fontes da página */
+
+@import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moulpali&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jomhuria&display=swap');
+
+
+/*font-family: "Odor Mean Chey", serif;*/
+/*   font-family: "Moulpali", sans-serif; */
+/* font-family: "Jomhuria", serif; */
+
+/* cores do site
+#0060B6
+#D2ECFF
+#0077FF
+#4CAF50
+#9ED7FF
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #D2ECFF;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* Header */
+
+header {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 6px black;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+header .logo img {
+    height: 4.5rem;
+    border-radius: 2rem;
+}
+
+header a{
+    text-decoration: none;
+}
+
+header .logo p {
+    font-family: "Jomhuria", serif;
+    font-size: 4rem;
+    letter-spacing: .2rem;
+    font-weight: bold;
+    color: #0a66c2;
+}
+
+.logo p:hover{
+    color: #4CAF50;
+    transition: .8s;
+}
+
+header button {
+    width: 15rem;
+    font-family: "Moulpali", sans-serif;
+    color: #0a66c2;
+    border: 2px solid #0a66c2;
+    background-color: white;
+}
+
+header button,
+header .perfil {
+    cursor: pointer;
+}
+
+header button {
+    padding: .6rem 2rem;
+    background-color: none;
+    border: .2rem solid #0a66c2;
+    border-radius: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+header .perfil {
+    height: 4.5rem;
+    border-radius: 50%;
+}
+
+
+/* Containers Globais */
+
+.container {
+    margin: 4rem auto;
+    padding: 3rem;
+    border-radius: 1.8rem;
+    text-align: center;
+}
+
+
+/* Botões padrões */
+
+button {
+    cursor: pointer;
+    border-radius: 2rem;
+    font-weight: bold;
+}
+
+button:hover {
+    color: white;
+    background-color:#0a66c2;
+    transition: .8s;
+}
+
+
+/* Inputs */
+
+input, select {
+    font-family: "Moulpali", sans-serif;
+    width: 100%;
+    padding: .5rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+input:focus, select:focus {
+    border-color: #0a66c2;
+}
+
+
+/* Footer */
+
+footer {
+    margin-top: auto;
+    width: 100%;
+    background-color: #0077FF;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white;
+    text-align: center;
+}
+
+footer .redes {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+footer .redes img{
+    width: 2.5rem;
+}
+
+footer span {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+footer .institucional {
+    background-color: #4CAF50;
+    width: 100%;
+    height: 13rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    gap: 10rem;
+}
+
+.institucional p:first-child{
+    width: 29rem;
+}
+
+footer .devsCopyright {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.footer a:hover {
+    cursor: pointer;
+}
+
+footer .institucional p,
+footer .devsCopyright p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    margin-top: 5px;
+}

@@ -1,0 +1,146 @@
+/* fontes da página */
+
+@import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moulpali&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moul&display=swap');
+
+
+/*   font-family: "Odor Mean Chey", serif;*/
+/*   font-family: "Moulpali", sans-serif; */
+
+/* cores do site
+#0060B6
+#D2ECFF
+#0077FF
+#4CAF50
+#9ED7FF
+*/
+
+.banner {
+    background-color: white;
+    box-shadow: 0px 0px .7rem black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40rem;
+    padding: 3rem;
+}
+
+.tagline {
+    width: 80rem;
+}
+
+.tagline p {
+    font-size: 4.5rem;
+    font-family: "Moul", serif;
+    letter-spacing: 0rem;
+    position: relative;
+    left: -2rem;
+}
+
+.cadastrarSe {
+    box-shadow: 0 0 .7rem black;
+    width: 45rem;
+    height: 28rem;
+    background-color: #9ED7FF;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 2rem;
+}
+
+.cadastrarSe p{
+    color: #0060B6 ;
+    font-family: "Odor Mean Chey", serif;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.cadastrarSe h3{
+    color: #0060B6 ;
+    font-family: "Odor Mean Chey", serif;
+    font-size: 3rem;
+}
+
+.cadastrarSe button{
+    border: none;
+    width: 15rem;
+    height: 5rem;
+    font-family: "Odor Mean Chey", serif;
+    background-color: #0060B6;
+    color: white;
+    font-size: 2rem;
+    margin-top: 3rem;
+}
+
+.cadastrarSe button:hover {
+    background-color: #0060B6;
+    color: #9ED7FF ;
+    transition: .8s;
+}
+
+.textos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 5rem;
+}
+
+.textos h2 {
+    font-family: "Odor Mean Chey", serif;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.textos p {
+    font-family: "Moulpali", sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.traducao {
+    box-shadow: 0 0 .7rem black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 30rem;
+    height: 25rem;
+    border-radius: 2rem;
+}
+
+.converse {
+    box-shadow: 0 0 .7rem black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 30rem;
+    height: 25rem;
+    border-radius: 2rem;
+}
+
+.foco {
+    box-shadow: 0 0 .7rem black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 30rem;
+    height: 25rem;
+    border-radius: 2rem;
+}

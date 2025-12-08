@@ -1,32 +1,73 @@
-<html>
-    <head>
-        <title>login</title>
-    </head>
-    <body>
-        <!--- As tags <br> sao temporarias remover quando criar o .css-->
-       <div>  <!--- Div box cadastro-->
-        <h2>Login</h2> <!-- colocar em ingles temp-->
-            <form method="post">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Login/login.css">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <title>Login - GlobalSpeak</title>
+</head>
+<body>
 
-            <div th:if="${loginError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${loginError}"></p>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="/img/Login/Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
             </div>
+        </a>
+    </header>
 
-            <div> <!-- div para o campo usuario-->
-                <label for="email">E-mail</label><br>
-                <input type="email" name="email" id="email" placeholder="Write your email here!">
+    <main>
+        <div class="container logar">
+            <form method=POST> <!-- DIRECIONAMENTO VIA BACK-END nao precisa do action="/Sala/sala.html-->
+                <div>  <!--- Div box cadastro-->
+                    <h2>Login</h2> <!-- colocar em ingles temp-->
+                    <form method="post">
+
+                    <div th:if="${loginError}" class="alert alert-danger">
+                        <h3>Falha de Regra de Negócio</h3>
+                        <p th:text="${loginError}"></p>
+                    </div>
+
+                    <div> <!-- div para o campo usuario-->
+                        <label for="email">E-mail</label><br>
+                        <input type="email" name="email" id="email" placeholder="Write your email here!">
+                    </div>
+                    <div>
+                        <label for="password">Password</label><br>
+                        <input type="password" name="password" id="password" placeholder="Write your password here!">
+                    </div>
+                    <!-- possivel futura confirmacao de cadastro-->
+                    <button class="loginb" type="submit">Login</button><br>
+                        <!---->
+                    <a class="cad" href="/register">Não tem uma conta? <span>Cadastre-se aqui!</span></a>
+                    </form>
+                </div>
+        
+            <a href="/"><button class="btn">Pagina Inicial</button></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="redes">
+                <figure><img src="Redes sociais/instagram.png" alt="instagram"></figure>
+                <figure><img src="Redes sociais/twitter.png" alt="twitter"></figure>
+                <figure><img src="Redes sociais/face.png" alt="facebook"></figure>
+                <figure><img src="Redes sociais/whatsapp.png" alt="whatsapp"></figure>
             </div>
-            <div>
-                <label for="password">Password</label><br>
-                <input type="password" name="password" id="password" placeholder="Write your password here!">
+            <div class="institucional">
+                <p>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+                Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000</p>
+                <p>CENTRAL DE RELACIONAMENTO</span> <br>
+                    (11) 2227-8020 (Telefone/WhatsApp) <br>
+                    senaimanutencao@sp.senai.br</p>
             </div>
-            <!-- possivel futura confirmacao de cadastro-->
-            <button type="submit">Login</button><br>
-                <!---->
-            <a href="/register">Não tem cadastro? Click aqui!</a>
-            <a href="/">Voltar a pagina principal</a>
-            </form>
-       </div>
-    </body>
+            <div class="devsCopyright">
+                <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+                <p>© 2025 SENAI. Todos os direitos reservados.</p>
+            </div>
+    </footer>
+
+</body>
 </html>

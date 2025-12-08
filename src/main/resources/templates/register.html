@@ -1,39 +1,52 @@
-<html>
-    <head>
-        <title>cadastro</title>
-    </head>
-    <body>
-        <!--- As tags <br> sao temporarias remover quando criar o .css-->
-       <div>  <!--- Div box cadastro-->
-        <h2>Cadastro</h2> <!-- colocar em ingls temp-->
-            <form method="post">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <link rel="stylesheet" href="/css/Cadastro/cadastro.css">
+    <title>Cadastro - GlobalSpeak</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
+            </div>
+        </a>
+        <a href="/login"><button>Login</button></a>
+    </header>
+
+    <div class="container cadastrar">
+        <h2>Cadastrar</h2>
+        <form method="post">
 
             <div th:if="${namedError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>                
+                <h3>Falha de Regra de Negócio</h3>
                 <p th:text="${namedError}"></p>
             </div>
 
-             <div th:if="${passwordError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${passwordError}"></p>
+            <div> <!--- div para o campo usuario-->
+                <label for="username">User name</label><br>
+                <input type="text" name="name" id="username" placeholder="Write your name here!">
             </div>
 
             <div th:if="${emailError}" class="alert alert-danger">
                 <h3>Falha de Regra de Negócio</h3>
                 <p th:text="${emailError}"></p>
             </div>
-            
-
-            <div> <!--- div para o campo usuario-->
-                <label for="username">User</label><br>
-                <input type="text" name="name" id="name" placeholder="Write your name here!">
-            </div>
 
             <div> <!-- div para o campo usuario-->
                 <label for="email">E-mail</label><br>
                 <input type="email" name="email" id="email" placeholder="Write your email here!">
             </div>
-            
+
+            <div th:if="${passwordError}" class="alert alert-danger">
+                <h3>Falha de Regra de Negócio</h3>
+                <p th:text="${passwordError}"></p>
+            </div>
+
             <div>
                 <label for="password">Password</label><br>
                 <input type="password" name="password" id="password" placeholder="Write your password here!">
@@ -43,7 +56,7 @@
                 <label for="password">Confirm Password</label><br>
                 <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Write your password here!">
             </div>
-
+            
             <div> <!--- Div para o campo de dropbox-->
                 <select name="nationality" id="nationality">
                     <option value="pt-BR">Português (Brasil)</option>
@@ -55,12 +68,32 @@
                 </select>
 
             </div>
-            <!-- possivel futura confirmacao de cadastro-->
-            <button type="submit">Enviar</button><br>
-                <!---->
-            <a href="/login">Ja tem uma conta? Click aqui para fazer login</a>
-            <a href="/">Voltar a pagina principal</a>
+                <!-- possivel futura confirmacao de cadastro-->
+            <button class="enviar" type="submit">Enviar</button><br>
+                    <!---->
+            <a class="log" href="/login">Ja tem uma conta? <span>Clique aqui para fazer login</span></a>
             </form>
-       </div>
-    </body>
+    </div>
+
+    <footer>
+        <div class="redes">
+                <figure><img src="Redes sociais/instagram.png" alt="instagram"></figure>
+                <figure><img src="Redes sociais/twitter.png" alt="twitter"></figure>
+                <figure><img src="Redes sociais/face.png" alt="facebook"></figure>
+                <figure><img src="Redes sociais/whatsapp.png" alt="whatsapp"></figure>
+            </div>
+            <div class="institucional">
+                <p>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+                Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000</p>
+                <p>CENTRAL DE RELACIONAMENTO</span> <br>
+                    (11) 2227-8020 (Telefone/WhatsApp) <br>
+                    senaimanutencao@sp.senai.br</p>
+            </div>
+            <div class="devsCopyright">
+                <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+                <p>© 2025 SENAI. Todos os direitos reservados.</p>
+            </div>
+    </footer>
+
+</body>
 </html>

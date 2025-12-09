@@ -12,14 +12,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer { // 1.
 
     // 2. Método essencial para configurar o broker de mensagens
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic"); 
+        config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
     }
 
     // 3. Método essencial para registrar o endpoint de conexão
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws"); 
+        registry.addEndpoint("/ws").withSockJS();
     }
-    
+
     // NENHUM outro método (como configureMessageConverters, configureClientInboundChannel, etc.)
 }

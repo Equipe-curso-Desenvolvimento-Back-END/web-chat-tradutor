@@ -407,6 +407,8 @@ public class RoomController {
 
             flash.addFlashAttribute("updateRoomError","Sala não encontrada!");
 
+            return "redirect:/rooms/update";
+
         }
 
         Long creatorId = (Long) session.getAttribute("userId");

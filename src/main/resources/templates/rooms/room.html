@@ -1,129 +1,126 @@
-<!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Sala de Chat: <span th:text="${room.name}"></span></title>
-    
+<html>
+    <!-- <input type="hidden" id="roomId" th:value="${room.id}" /> -->
+    <!-- CARREGANDO Libs -->
+    <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
     
-    <style>
-        #chat-output { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-        .message { margin-bottom: 5px; }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script> 
 </head>
 <body>
+    <!-- Carregamento de captura do room.id -->
+    <input type="hidden" id="roomId" th:value="${room.id}" />
 
-    <h2>Chat na Sala: <span th:text="${room.name}"></span> (ID: <span th:text="${roomId}"></span>)</h2>
-    <hr>
+        <p>
+    <label for="nickname-input">Seu Nick:</label>
+    <input type="text" id="nickname-input" value="Visitante" placeholder="Seu nome" />
+        </p>
 
-    <p>
-        <label for="nickname-input">Seu Nick:</label>
-        <input type="text" id="nickname-input" value="Visitante" placeholder="Seu nome" />
-    </p>
+        <!-- Botao de sair -->
+        <button onclick="exitRoom()">Sair da Sala</button>
 
-    <div id="chat-output">
-        <!-- Iteracao nas mensagens armazenadas no banco -->
-        <div th:each="msg : ${messageHistory}" class="message">
-        <span th:text="${#temporals.format(msg.timestamp, 'HH:mm')}" style="color: gray;"></span>
-        <span th:text="${msg.senderName} + ': ' + ${msg.content}"></span>
-    </div>
+        <!-- chat box das mensagens -->
+        <div id="chat-output" style="height: 300px; border: 1px solid #ccc; overflow-y: scroll; margin-top: 10px;">
+            </div>
 
-    </div>
+            <!-- Input do usuario -->
+        <input type="text" id="message-input" placeholder="Digite sua mensagem" style="width: 70%;" />
+                 <!-- Botao de enviar mensagem -->
+        <button onclick="sendMessage()">Enviar</button>
 
-    <input type="text" id="message-input" placeholder="Digite sua mensagem">
-    <button onclick="sendMessage()">Enviar</button>
-    <button onclick="disconnect()">Sair da Sala</button>
-
-    <script th:inline="javascript">
-        // 1. CAPTURA DO ROOM ID (Thymeleaf injeta o valor do Model aqui)
-        const ROOM_ID = [[${roomId}]]; 
+<script>
+    // GLOBAIS
+    let stompClient = null;
+    
+        // 2. FUNÇÃO PRINCIPAL QUE INICIA TUDO
+    function connect() {
+        // 🔑 SOLUÇÃO DO TypeError: Lemos o ID APENAS AQUI, dentro da função de conexão.
+        // Se o elemento não for encontrado no DOM, o ROOM_ID será null e o if impedirá a falha.
+        const roomIdElement = document.getElementById('roomId');
         
-        let stompClient = null;
+        if (!roomIdElement) {
+            console.error("ERRO CRÍTICO: Elemento 'roomId' não encontrado. Verifique seu HTML.");
+            return;
+        }
 
-        // Função para conectar ao WebSocket
-        function connect() {
-            // Conecta-se ao endpoint /ws configurado no Spring
-            const socket = new SockJS('/ws'); 
-            stompClient = Stomp.over(socket);
-            
-            stompClient.connect({}, function (frame) {
-                console.log('Conectado ao WebSocket: ' + frame);
-                
-                // 2. ASSINATURA: O cliente se inscreve para receber mensagens
-                // Destino: /topic/room/{roomId}
-                stompClient.subscribe('/topic/room/' + ROOM_ID, function (messageOutput) {
-                    showMessage(messageOutput.body);
-                });
-            }, function(error) {
-                console.error('Erro de conexão:', error);
+        const ROOM_ID = roomIdElement.value;
+        const socket = new SockJS('/ws'); 
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            console.log('>>> CONECTADO AO WEBSOCKET');
+
+            // Assina o tópico
+            stompClient.subscribe('/topic/room/' + ROOM_ID, function (messageOutput) {
+                showMessage(messageOutput.body);
+            });
+        }, function(error) {
+            console.error('Erro de conexão do STOMP:', error);
+            alert('Whoops! Lost connection to http://localhost:8080/ws');
+        });
+    }
+
+    function exitRoom() {
+        if (stompClient && stompClient.connected) {
+            stompClient.disconnect(function() {
+                console.log("Desconectado da sala.");
+                window.location.href = "/rooms"; // Redireciona para a lista de salas
             });
         }
+    }
 
-        // Função para desconectar
-        function disconnect() {
-            if (stompClient !== null) {
-                stompClient.disconnect();
-            }
-            console.log("Desconectado do servidor.");
-            // Opcional: Redirecionar para a lista de salas após desconectar
-            // window.location.href = '/rooms'; 
+    // 3. FUNÇÃO DE ENVIO DE MENSAGEM (Resolvendo messageInput is not defined)
+    function sendMessage() {
+        // Acesso local aos elementos para evitar ReferenceError
+        const messageInput = document.getElementById('message-input');
+        const nicknameInput = document.getElementById('nickname-input');
+        const roomIdElement = document.getElementById('roomId');
+
+        if (!stompClient || !stompClient.connected) {
+            console.warn('Conexão STOMP não estabelecida.');
+            return;
         }
 
-        // Função para enviar mensagem
-        function sendMessage() {
-            const messageInput = document.getElementById('message-input');
-            const nicknameInput = document.getElementById('nickname-input');
+        if (!messageInput || !nicknameInput || !roomIdElement) {
+            console.error("Erro: Campos de input não encontrados para envio.");
+            return;
+        }
+        
+        const content = messageInput.value.trim();
+        const senderName = nicknameInput.value.trim();
+        const ROOM_ID = roomIdElement.value; // Pega o ID da sala novamente
 
-            // Verificar se os elementos foram encontrados (bom para debug)
-            if (!messageInput || !nicknameInput) {
-                console.error("Erro: Campos de input não encontrados no DOM.");
-                return;
-            }
-
-            const content = messageInput.value.trim();
-            const senderName = nicknameInput.value.trim();
-
-            if (content === '' || senderName === '') return;
-
-            // OBJETO JSON
+        if (content && senderName) {
             const chatMessage = {
-
                 senderName: senderName,
                 content: content,
-                roomId: ROOM_ID // Inclusão de ID na sala(Optional)
-
+                roomId: ROOM_ID
             };
 
-            // Serializar objeto JSON
             stompClient.send("/app/room/" + ROOM_ID, {}, JSON.stringify(chatMessage));
-    
-            messageInput.value = ''; // Limpa o campo
-
+            messageInput.value = '';
         }
+    }
 
-        // Função para exibir mensagem
-        function showMessage(rawMessage) {
+    function showMessage(messageString) { 
+        try {
+            const messageObject = JSON.parse(messageString);
+            
             const output = document.getElementById('chat-output');
+            const messageElement = document.createElement('div');
             
-            const messageObject = JSON.parse(rawMessageBody);
-
-            const p = document.createElement('p');
-            p.className = 'message';
+            messageElement.innerHTML = `<strong>${messageObject.senderName}:</strong> <span>${messageObject.content}</span>`;
             
-            // Formato final>>> Nick: Menssage
-            p.textContent = messageObject.senderName + ': ' + messageObject.content;
-
-            output.appendChild(p);
+            output.appendChild(messageElement);
+            output.scrollTop = output.scrollHeight; 
             
-            // Scroll automático para a última mensagem
-            output.scrollTop = output.scrollHeight;
+        } catch (e) {
+            console.error("Erro ao processar mensagem JSON:", e, messageString);
         }
+    }
 
-        // Inicia a conexão assim que a página é carregada
-        window.onload = connect;
-        
-    </script>
+    // INICIALIZADOR DO DOM 
+    window.onload = connect;
 
+</script>
 </body>
 </html>

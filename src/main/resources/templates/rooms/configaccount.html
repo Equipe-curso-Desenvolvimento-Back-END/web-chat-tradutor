@@ -1,58 +1,86 @@
-<html>
-    <head>
-        <title>Configaccount</title>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <link rel="stylesheet" href="/css/Configurar/configaccount.css">
+    <title>Configurar Conta</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="/img/Configurar/Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
+            </div>
+        </a>
+    </header>
+
+    <main>
         <!--- As tags <br> sao temporarias remover quando criar o .css --->
-       <div>  <!--- Div box cadastro -->
-        <h2>Create Room</h2> <!-- colocar em ingles temp -->
+        <div class="criar">  <!--- Div box cadastro -->
+            <h2>Configurar Conta</h2> <!-- colocar em ingles temp -->
             <form method="post">
-
-            <div th:if="${updateAccountError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${updateAccountError}"></p>
-            </div>
-
-            <div th:if="${updateAccountAlert}" class="alert alert-danger">
-                <h3>Aviso</h3>
-                <p th:text="${updateAccountAlert}"></p>
-            </div>
-
-            <div th:if="${updateAccountConfirm}" class="alert alert-danger">
-                <h3>Sucesso!</h3>
-                <p th:text="${updateAccountConfirm}"></p>
-            </div>
-
-            <div> <!--- div para o campo usuario-->
-                <label for="username">User name</label><br>
-                <input type="text" name="name" id="username" placeholder="Write your name here!">
-            </div>
-
-            <div>
-                <label for="password">Password</label><br>
-                <input type="password" name="password" id="password" placeholder="Write your password here!">
-            </div>
-
-            <div>
-                <label for="password">Password</label><br>
-                <input type="password" name="newPassword" id="newPassword" placeholder="Write your password here!">
-            </div>
+                <div th:if="${updateAccountError}" class="alert alert-danger erro">
+                    <h3>Falha de Regra de Negócio</h3>
+                    <p th:text="${updateAccountError}"></p>
+                </div>
+                <div th:if="${updateAccountAlert}" class="alert alert-danger alerta">
+                    <h3>Aviso</h3>
+                    <p th:text="${updateAccountAlert}"></p>
+                </div>
+                <div th:if="${updateAccountConfirm}" class="alert alert-danger certo">
+                    <h3>Sucesso!</h3>
+                    <p th:text="${updateAccountConfirm}"></p>
+                </div>
+                <div> <!--- div para o campo usuario-->
+                    <label for="username">User name</label>
+                    <input type="text" name="name" id="username" placeholder="Write your name here!">
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Write your password here!">
+                </div>
+                <div>
+                    <label for="password">New Password</label>
+                    <input type="password" name="newPassword" id="newPassword" placeholder="Write your password here!">
+                </div>
             
-              <div> <!--- Div para o campo de dropbox-->
-
-                <select name="nationality" id="nationality">
-                    <option value="pt-BR">Português (Brasil)</option>
-                    <option value="en-US">English (United States)</option>
-                    <option value="ja-JP">日本語 (日本)</option>
-                    <option value="ru-RU">Русский (Россия)</option>
-                    <option value="ar-SA">العربية (السعودية)</option>
-                    <option value="ko-KR">한국어 (대한민국)</option>
-                </select>
-
-            </div>
-            <button type="submit">Alterar info</button>
+                <div> <!--- Div para o campo de dropbox-->
+                    <select name="nationality" id="nationality">
+                        <option value="pt-BR">Português (Brasil)</option>
+                        <option value="en-US">English (United States)</option>
+                        <option value="ja-JP">日本語 (日本)</option>
+                        <option value="ru-RU">Русский (Россия)</option>
+                        <option value="ar-SA">العربية (السعودية)</option>
+                        <option value="ko-KR">한국어 (대한민국)</option>
+                    </select>
+                </div>
+                <button class="btn" type="submit">Alterar info</button>
             </form>
-            <a href="/rooms/myaccount"><button type="button">Voltar para My Account</button></a><br>
-       </div>
-    </body>
+            <a href="/rooms/myaccount"><button class="dois" type="button">Voltar para My Account</button></a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="redes">
+            <figure><img src="/img/Configurar/Redes sociais/instagram.png" alt="instagram"></figure>
+            <figure><img src="/img/Configurar/Redes sociais/twitter.png" alt="twitter"></figure>
+            <figure><img src="/img/Configurar/Redes sociais/face.png" alt="facebook"></figure>
+            <figure><img src="/img/Configurar/Redes sociais/whatsapp.png" alt="whatsapp"></figure>
+        </div>
+        <div class="institucional">
+            <p>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+              Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000</p>
+            <p>CENTRAL DE RELACIONAMENTO</span> <br>
+                (11) 2227-8020 (Telefone/WhatsApp) <br>
+                senaimanutencao@sp.senai.br</p>
+        </div>
+        <div class="devsCopyright">
+            <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+            <p>© 2025 SENAI. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
 </html>

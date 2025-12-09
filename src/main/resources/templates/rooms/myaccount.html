@@ -1,88 +1,110 @@
-<html>
-    <head>
-        <title>My Account</title>
-    </head>
-    <body>
-        <!--- As tags <br> sao temporarias remover quando criar o .css --->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Perfil/myaccount.css">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <title>Página inicial - GlobalSpeak</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="/img/Perfil/Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
+            </div>
+        </a>
+    </header>
+    
+    <main>
+        <section class="editarPerfil">
+            <img src="/img/Perfil/Imagens/Ellipse 1.png" alt="Foto de perfil">
+            <div class="informacoes">
+                <!--- As tags <br> sao temporarias remover quando criar o .css --->
 
-        <div th:if="${myAccountError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${myAccountError}"></p>
-        </div>
-
-        <div th:if="${myAccountEmptyError}" class="alert alert-danger">
-                <h3>Alerta</h3>
-                <p th:text="${myAccountEmptyError}"></p>
-        </div>
-
-        <div th:if="${myAccountConfirm}" class="alert alert-danger">
-                <h3>Sucesso!</h3>
-                <p th:text="${myAccountConfirm}"></p>
-        </div>
-
-        <!--  DIV de info do usuario -->
-        <div>
-            <h1>My Account Info</h1>
-
-            <p>
-                <strong>Nome:</strong> 
-                <span th:text="${myClientInfo.name}">Nome do Usuário Aqui</span>
-            </p>
-
-            <p>
-                <strong>E-mail:</strong> 
-                <span th:text="${myClientInfo.email}">email@dominio.com</span>
-            </p>
-
-            <p>
-                <strong>Nacionalidade:</strong> 
-                <span th:text="${myClientInfo.nationality}">pt-BR</span>
-            </p>
-
-        </div>
-
-        <h2>My Rooms</h2>    
-
-        <!-- Leituro de registros do banco, le e lista em .html -->
-        <div th:each="room : ${myRoomsList}" style="margin-bottom: 10px;">
-            
-            <!-- Com estilo basico para teste  -->
-             
-            <!-- <a th:href="@{/room/{roomId}(roomId=${room.id})}" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-           
-                <span th:text="${room.name}">Nome da Sala</span><br>
-                <span th:text="${room.description}">Nome da Sala</span><br>
-
-            </a> -->
-
-            <!-- Padrao limpo sem style -->
-
-            <a th:href="@{/chat/{roomId}(roomId=${room.id})}">
-           
-                <span th:text="${room.name}">Nome da Sala</span><br>
-                <span th:text="${room.description}">Descricao da salsa</span><br>
-
-                <div class="creator-details">
-                    <small>
-                Criador: 
-                <strong th:text="${room.creatorName}">[Nome do Criador]</strong> 
-                Email:
-                <span th:text="${room.creatorEmail}">[email@exemplo.com]</span>
-                Nacionalidade:
-                <span th:text="${room.creatorNationality}">[pt-BR]</span>
-                  </small>
+                <div th:if="${myAccountError}" class="alert alert-danger">
+                        <h3>Falha de Regra de Negócio</h3>
+                        <p th:text="${myAccountError}"></p>
                 </div>
 
-            </a>
+                <div th:if="${myAccountEmptyError}" class="alert alert-danger">
+                        <h3>Alerta</h3>
+                        <p th:text="${myAccountEmptyError}"></p>
+                </div>
 
+                <div th:if="${myAccountConfirm}" class="alert alert-danger">
+                        <h3>Sucesso!</h3>
+                        <p th:text="${myAccountConfirm}"></p>
+                </div>
+
+                <!--  DIV de info do usuario -->
+                <div>
+                    <h1>My Account Info</h1>
+
+                    <p>
+                        <strong>Nome:</strong> 
+                        <span th:text="${myClientInfo.name}">Nome do Usuário Aqui</span>
+                    </p>
+
+                    <p>
+                        <strong>E-mail:</strong> 
+                        <span th:text="${myClientInfo.email}">email@dominio.com</span>
+                    </p>
+
+                    <p>
+                        <strong>Nacionalidade:</strong> 
+                        <span th:text="${myClientInfo.nationality}">pt-BR</span>
+                    </p>
+                </div>
+
+                <h2>My Rooms</h2>    
+
+                <!-- Leituro de registros do banco, le e lista em .html -->
+                <div class="listSalas" th:each="room : ${myRoomsList}">
+                        <a class="infoSala" th:href="@{/rooms/{roomId}(roomId=${room.id})}">
+                            <span th:text="${room.name}">Nome da Sala</span><br>
+                            <span th:text="${room.description}">Descricao da sala</span><br>
+
+                            <div class="creator-details">
+                                <small>
+                                <p>Criador:<strong th:text="${room.creatorName}">[Nome do Criador]</strong> </p> 
+                                
+                                <p>Email:<span th:text="${room.creatorEmail}">[email@exemplo.com]</span></p>
+                                
+                                <p>Nacionalidade:<span th:text="${room.creatorNationality}">[pt-BR]</span></p>
+
+                                
+                                </small>
+                            </div>
+                        </a>
+                </div>
+                <!-- <p><a th:href="@{/rooms}"><button type="button">Back to rooms list</button></a></p> -->
+                <a href="/rooms"><button class="btn" type="button">Voltar para Salas</button></a>
+                <a href="/rooms/configaccount"><button class="btn" type="button">Config Account</button></a>
+                <a href="/rooms/logout"><button class="btn" type="button">Logout</button></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="redes">
+            <figure><img src="/img/Perfil/Redes sociais/instagram.png" alt="instagram"></figure>
+            <figure><img src="/img/Perfil/Redes sociais/twitter.png" alt="twitter"></figure>
+            <figure><img src="/img/Perfil/Redes sociais/face.png" alt="facebook"></figure>
+            <figure><img src="/img/Perfil/Redes sociais/whatsapp.png" alt="whatsapp"></figure>
         </div>
-
-            <!-- <p><a th:href="@{/rooms}"><button type="button">Back to rooms list</button></a></p> -->
-
-            <a href="/rooms"><button type="button">Back to rooms list</button></a><br>
-            <a href="/rooms/configaccount"><button type="button">Config Account</button></a><br>
-            <a href="/rooms/logout"><button type="button">logout</button></a><br>
-
-       </div>
-    </body>
+        <div class="institucional">
+            <p>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+              Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000</p>
+            <p>CENTRAL DE RELACIONAMENTO</span> <br>
+                (11) 2227-8020 (Telefone/WhatsApp) <br>
+                senaimanutencao@sp.senai.br</p>
+        </div>
+        <div class="devsCopyright">
+            <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+            <p>© 2025 SENAI. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
 </html>

@@ -1,0 +1,166 @@
+/* fontes da página */
+
+@import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moulpali&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jomhuria&display=swap');
+
+
+/*font-family: "Odor Mean Chey", serif;*/
+/*   font-family: "Moulpali", sans-serif; */
+/* font-family: "Jomhuria", serif; */
+
+/* cores do site
+#0060B6
+#D2ECFF
+#0077FF
+#4CAF50
+#9ED7FF
+*/
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atualizar {
+    width: 50rem;
+    background-color: white;
+    box-shadow: 0 0 .5rem black;
+    margin: 10rem 5rem;
+    border-radius: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    font-family: "Moulpali", sans-serif;
+    font-size: 1.5rem;
+    color: #4CAF50;
+    margin: 0 2rem;
+}
+
+input {
+    background-color: #DBFFB1;
+    padding: .5rem 2rem;
+}
+
+.strong {
+    font-family: "Moulpali", sans-serif;
+}
+
+span {
+    font-family: "Moulpali", sans-serif;
+}
+
+h2 {
+    text-align: center;
+    width: 80%;
+    font-family: "Odor Mean Chey", serif;
+    color: #4CAF50;
+    font-size: 2.5rem;
+    font-weight: 100;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.erro h3{
+    text-align: center;
+    font-family: "Jomhuria", serif;
+    color: #DD0000;
+    font-size: 2.5rem;
+    font-weight: 100;
+    padding: .5rem 1rem;
+}
+
+.alerta h3{
+    text-align: center;
+    font-family: "Jomhuria", serif;
+    color: #fab700;
+    font-size: 2.5rem;
+    font-weight: 100;
+    padding: .5rem 1rem;
+}
+
+.certo h3{
+    text-align: center;
+    font-family: "Jomhuria", serif;
+    color: #4CAF50;
+    font-size: 2.5rem;
+    font-weight: 100;
+    padding: .5rem 1rem;
+}
+
+.erro {
+    margin: 1rem;
+    font-size: 1.5rem;
+    background-color: #ffceb1;
+    border: .1rem solid #DD0000;
+    border-radius: 1rem;
+}
+
+.alerta {
+    margin: 1rem;
+    font-size: 1.5rem;
+    background-color: #fff1b1;
+    border: .1rem solid #fab700;
+    border-radius: 1rem;
+}
+
+.certo {
+    margin: 1rem;
+    font-size: 1.5rem;
+    background-color: #DBFFB1;
+    border: .1rem solid #4CAF50;
+    border-radius: 1rem;
+}
+
+.alert p {
+    text-align: center;
+    font-family: "Moulpali", sans-serif;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: 100;
+}
+
+.btn {
+    font-family: "Odor Mean Chey", serif;
+    width: 15rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    letter-spacing: .2rem;
+    padding: .5rem 1rem;
+    font-weight: 100;
+    border: none;
+    border-radius: 1rem;
+    color: #4CAF50;
+    background-color: #DBFFB1;
+}
+
+.btn:hover {
+    background-color: #4CAF50;
+    color: #DBFFB1;
+}
+
+.dois {
+    margin: 2rem;
+    font-family: "Odor Mean Chey", serif;
+    width: 21rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    letter-spacing: .2rem;
+    padding: .5rem 1rem;
+    border: .1rem solid #0077FF;
+    border-radius: 1rem;
+    color: #0077FF;
+    background-color: #9ED7FF;
+}

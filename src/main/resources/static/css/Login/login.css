@@ -26,6 +26,30 @@
     gap: 1rem;
 }
 
+.erro h3{
+    text-align: center;
+    font-family: "Jomhuria", serif;
+    color: #DD0000;
+    font-size: 2.5rem;
+    font-weight: 100;
+    padding: .5rem 1rem;
+}
+
+.erro {
+    margin: 1rem;
+    font-size: 1.5rem;
+    background-color: #ffceb1;
+    border: .1rem solid #DD0000;
+    border-radius: 1rem;
+}
+
+.alert p {
+    text-align: center;
+    font-family: "Moulpali", sans-serif;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: 100;
+}
 
 .logar h2{
     font-family: "Odor Mean Chey", serif;

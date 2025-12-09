@@ -1,34 +1,78 @@
-<html>
-    <head>
-        <title>Create</title>
-    </head>
-    <body>
-        <!--- As tags <br> sao temporarias remover quando criar o .css --->
-       <div>  <!--- Div box cadastro -->
-        <h2>Create Room</h2> <!-- colocar em ingles temp -->
+    <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <link rel="stylesheet" href="/css/CriarRemover/create.css">
+    <title>Criar sala</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="/img/CriarRemover/Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
+            </div>
+        </a>
+        <a href="/rooms/myaccount"><button>Minha conta</button></a>
+    </header>
+
+    <main>
+         <!--- As tags <br> sao temporarias remover quando criar o .css --->
+        <div class="cadastro">  <!--- Div box cadastro -->
+            <h2>Criar Sala</h2> <!-- colocar em ingles temp -->
             <form method="post">
-
-            <div th:if="${createRoomError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${createRoomError}"></p>
-            </div>
-
-            <div th:if="${createRoomConfirm}" class="alert alert-danger">
-                <h3>Sucesso!</h3>
-                <p th:text="${createRoomConfirm}"></p>
-            </div>
-
-            <div> <!--- Campo temporario Em breve tera forma de click por nome de lista -->
-                <label for="username">Name Room</label><br>
-                <input type="text" name="name" id="name" placeholder="Write the name room here!">
-            </div>
-            <div> <!--- Campo temporario Em breve tera forma de click por nome de lista -->
-                <label for="username">Description Room</label><br>
-                <input type="text" name="description" id="description" placeholder="Write the description of room here!">
-            </div>
-            <button type="submit">Create Room</button>
+                <div th:if="${createRoomError}" class="alert alert-danger erro">
+                    <h3>Falha de Regra de Negócio</h3>
+                    <p th:text="${createRoomError}"></p>
+                </div>
+                <div th:if="${createRoomConfirm}" class="alert alert-danger certo">
+                    <h3>Sucesso!</h3>
+                    <p th:text="${createRoomConfirm}"></p>
+                </div>
+                <div> <!--- Campo temporario Em breve tera forma de click por nome de lista -->
+                    <label for="username">Name Room</label>
+                    <input type="text" name="name" id="name" placeholder="Write the name room here!">
+                </div>
+                <div> <!--- Campo temporario Em breve tera forma de click por nome de lista -->
+                    <label for="username">Description Room</label>
+                    <input type="text" name="description" id="description" placeholder="Write the description of room here!">
+                </div>
+                <button class="btn" type="submit">Criar</button>
             </form>
-            <a href="/rooms"><button type="submit">Back to rooms</button></a><br>
-       </div>
-    </body>
+            <a href="/rooms"><button class="dois" type="submit">Voltar para a lista</button></a>
+        </div>
+    </main>
+
+    <footer>    
+        <div class="redes">
+                <a href="">
+                    <figure><img src="/img/CriarRemover/Redes sociais/instagram.png" alt="instagram"></figure>
+                </a>
+                <a href="">
+                    <figure><img src="/img/CriarRemover/Redes sociais/twitter.png" alt="twitter"></figure>
+                </a>
+                <a href="">
+                    <figure><img src="/img/CriarRemover/Redes sociais/face.png" alt="facebook"></figure>
+                </a>
+                <a href="">
+                    <figure><img src="/img/CriarRemover/Redes sociais/whatsapp.png" alt="whatsapp"></figure>
+                </a>
+            </div>
+            <div class="institucional">
+                <p><span>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+                    Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000
+                </p>
+                <p><span>CENTRAL DE RELACIONAMENTO</span> <br>
+                    (11) 2227-8020 (Telefone/WhatsApp) <br>
+                    senaimanutencao@sp.senai.br
+                </p>
+            </div>
+            <div class="devsCopyright">
+                <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+                <p>© 2025 SENAI. Todos os direitos reservados.</p>
+            </div>
+    </footer>
+</body>
 </html>

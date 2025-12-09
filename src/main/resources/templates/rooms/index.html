@@ -1,49 +1,71 @@
-<html>
-    <head>
-        <title>Rooms</title>
-    </head>
-    <body>
-        <!--- As tags <br> sao temporarias remover quando criar o .css --->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <link rel="stylesheet" href="/css/ListaSalas/rooms.css">
+    <title>Lista de Salas</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="/img/ListaSalas/Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
+            </div>
+        </a>
+        <a href="/rooms/myaccount"><button>Minha conta</button></a>
+    </header>
 
-        <h2>Rooms Avaible</h2>
-    
-        <!-- Leituro de registros do banco, le e lista em .html -->
-        <div th:each="room : ${roomsList}" style="margin-bottom: 10px;">
+    <main>
+        <section class="lista">
+            <div class="menu">
+                <button class="btn"><img src="/img/ListaSalas/Imagens/voltar.png" alt="Voltar"></button>
+                <h3>Salas Disponiveis</h3>
+                <div class="botoesSala">
             
-            <!-- Com estilo basico para teste  -->
-             
-            <!-- <a th:href="@{/room/{roomId}(roomId=${room.id})}" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-           
-                <span th:text="${room.name}">Nome da Sala</span><br>
-                <span th:text="${room.description}">Nome da Sala</span><br>
+                    <a th:href="@{/rooms/create}"><button class="criarr" type="button">Criar Nova Sala<button></a>
+                    <a th:href="@{/rooms/remove}"><button class="removerr" type="button">Remover Sala<button></a>
 
-            </a> -->
+                    <!-- Tags Novas/botoes novos -->
+                    <a th:href="@{/rooms/update}"><button class="removerr" type="button">Atualizar Sala<button></a>
+                    <a th:href="@{/rooms/myaccount}"><button class="removerr" type="button">Minha Conta<button></a>
+                    
+                </div>
+            </div>
+            <div class="salas">
+                <div class="cont" th:each="room : ${roomsList}">
+        
+                    <a class="nomeSalas" th:href="@{/rooms/{roomId}(roomId=${room.id})}">
+                
+                        <span th:text="${room.name}">Nome da Sala</span>
+                    </a>
+                    <!-- Adicionar descricao -->
+                </div>
+            </div>
+        </section>
 
-            <!-- Padrao limpo sem style -->
+    </main>
 
-            <!-- <a th:href="@{/room/{roomId}(roomId=${room.id})}">
-           
-                <span th:text="${room.name}">Nome da Sala</span><br>
-                <span th:text="${room.descriptmmvnion}">Nome da Sala</span><br>
-
-            </a> --> 
-            <!-- Agora essa listagem ira direcionar para /chat em seu respectivo id -->
-            <!-- Ainda em testes -->
-             
-            <a th:href="@{/rooms/{roomId}(roomId=${room.id})}">
-           
-                <span th:text="${room.name}">Nome da Sala</span><br>
-                <span th:text="${room.description}">Nome da Sala</span><br>
-d
-            </a>
-
+    <footer>
+        <div class="redes">
+            <figure><img src="/img/ListaSalas/Redes sociais/instagram.png" alt="instagram"></figure>
+            <figure><img src="/img/ListaSalas/Redes sociais/twitter.png" alt="twitter"></figure>
+            <figure><img src="/img/ListaSalas/Redes sociais/face.png" alt="facebook"></figure>
+            <figure><img src="/img/ListaSalas/Redes sociais/whatsapp.png" alt="whatsapp"></figure>
         </div>
-
-            <p><a th:href="@{/rooms/create}"><button type="button">Criar uma  nova Sala</button></a></p>
-            <p><a th:href="@{/rooms/update}"><button type="button">Update Room</button></a></p>
-            <p><a th:href="@{/rooms/remove}"><button type="button">Apagar sala</button></a></p>
-            <p><a th:href="@{/rooms/myaccount}"><button type="button">My Account</button></a></p>
-
-       </div>
-    </body>
+        <div class="institucional">
+            <p>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+              Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000</p>
+            <p>CENTRAL DE RELACIONAMENTO</span> <br>
+                (11) 2227-8020 (Telefone/WhatsApp) <br>
+                senaimanutencao@sp.senai.br</p>
+        </div>
+        <div class="devsCopyright">
+            <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+            <p>© 2025 SENAI. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
 </html>

@@ -52,21 +52,17 @@ public class Room implements Serializable {
 
     private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ThreadChat> threadChats;
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime registrationDate;
 
     public Room() {
     }
 
-    public Room(String name, String description, Set<User> users, List<ThreadChat> threadChats, Long creatorId, String creatorName, String creatorEmail, String creatorNationality) {
+    public Room(String name, String description, Set<User> users, Long creatorId, String creatorName, String creatorEmail, String creatorNationality) {
 
         this.name = name;
         this.description = description;
         this.users = users;
-        this.threadChats = threadChats;
         this.creatorId = creatorId;
         this.creatorName = creatorName;
         this.creatorEmail = creatorEmail;
@@ -121,12 +117,6 @@ public class Room implements Serializable {
     public Set<User> getUsers() {
 
         return users;
-
-    }
-
-    public List<ThreadChat> getThreadChats() {
-
-        return threadChats;
 
     }
 

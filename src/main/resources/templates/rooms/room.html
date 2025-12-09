@@ -17,8 +17,19 @@
     <h2>Chat na Sala: <span th:text="${room.name}"></span> (ID: <span th:text="${roomId}"></span>)</h2>
     <hr>
 
+    <p>
+        <label for="nickname-input">Seu Nick:</label>
+        <input type="text" id="nickname-input" value="Visitante" placeholder="Seu nome" />
+    </p>
+
     <div id="chat-output">
-        </div>
+        <!-- Iteracao nas mensagens armazenadas no banco -->
+        <div th:each="msg : ${messageHistory}" class="message">
+        <span th:text="${#temporals.format(msg.timestamp, 'HH:mm')}" style="color: gray;"></span>
+        <span th:text="${msg.senderName} + ': ' + ${msg.content}"></span>
+    </div>
+
+    </div>
 
     <input type="text" id="message-input" placeholder="Digite sua mensagem">
     <button onclick="sendMessage()">Enviar</button>
@@ -62,26 +73,43 @@
         // Função para enviar mensagem
         function sendMessage() {
             const input = document.getElementById('message-input');
-            const message = input.value;
-            
-            if (message.trim() === '') return;
+            const nicknameInput = document.getElementById('nickname-input');
 
-            // 3. ENVIO: Envia a mensagem para o ChatController
-            // Destino: /app/room/{roomId}
-            stompClient.send("/app/room/" + ROOM_ID, {}, message);
-            
-            input.value = ''; // Limpa o campo após o envio
+            const content = messageInput.value.trim();
+            const senderName = nicknameInput.value.trim();
+
+            if (content === '' || senderName === '') return;
+
+            // OBJETO JSON
+            const chatMessage = {
+
+                senderName: senderName,
+                content: content,
+                roomId: ROOM_ID // Inclusão de ID na sala(Optional)
+
+            };
+
+            // Serializar objeto JSON
+            stompClient.send("/app/room/" + ROOM_ID, {}, JSON.stringify(chatMessage));
+    
+            messageInput.value = ''; // Limpa o campo
+
         }
 
         // Função para exibir mensagem
         function showMessage(rawMessage) {
             const output = document.getElementById('chat-output');
+            
+            const messageObject = JSON.parse(rawMessageBody);
+
             const p = document.createElement('p');
             p.className = 'message';
-            // O servidor (ChatController) está devolvendo uma String simples por enquanto.
-            p.textContent = rawMessage; 
             
+            // Formato final>>> Nick: Menssage
+            p.textContent = messageObject.senderName + ': ' + messageObject.content;
+
             output.appendChild(p);
+            
             // Scroll automático para a última mensagem
             output.scrollTop = output.scrollHeight;
         }

@@ -1,7 +1,6 @@
 package com.chat.chat_tradutor.service;
 
 import com.chat.chat_tradutor.model.Room;
-import com.chat.chat_tradutor.model.ThreadChat;
 import com.chat.chat_tradutor.model.User;
 
 import com.chat.chat_tradutor.repository.RoomRepository;
@@ -137,26 +136,6 @@ public class RoomService {
         return room;
 
     }
-
-
-    // CRUD para ThreadChats
-
-    public Room saveThread(Room room, ThreadChat thread) {
-
-        room.getThreadChats().add(thread);
-
-        return room;
-
-    }
-
-    // add removeThread
-
-    public List<ThreadChat> getThreads(Room room) {
-
-        return room.getThreadChats();
-
-    }
-
 
 }
 

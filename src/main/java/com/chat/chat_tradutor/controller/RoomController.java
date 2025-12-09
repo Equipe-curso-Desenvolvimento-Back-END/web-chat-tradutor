@@ -1,5 +1,7 @@
 package com.chat.chat_tradutor.controller;
 
+import com.chat.chat_tradutor.repository.MessageRepository;
+
 import com.chat.chat_tradutor.service.RoomService;
 import com.chat.chat_tradutor.service.UserService;
 
@@ -36,10 +38,16 @@ public class RoomController {
     private final RoomService service;
     private final UserService userService;
 
-    public RoomController(RoomService service, UserService userService) {
+    private final MessageRepository messageRepository;
+
+    public RoomController(RoomService service,
+            UserService userService,
+            MessageRepository messageRepository) {
 
         this.service = service;
         this.userService = userService;
+
+        this.messageRepository = messageRepository;
 
     }
 
@@ -64,7 +72,6 @@ public class RoomController {
     // formato resumido sem rooms/room/{roomId}
     @GetMapping("/{roomId}")
     public String accessRoom(@PathVariable Long roomId, Model model, HttpSession session) {
-
 
         Room room = service.findById(roomId);
 
@@ -103,6 +110,10 @@ public class RoomController {
             // userService.updateUser(userVerify);
 
         }
+
+        var messageHistory = messageRepository.findByRoomIdOrderByTimestampAsc(roomId);
+
+        model.addAttribute("messageHistory",messageHistory);
 
         return "rooms/room";
 

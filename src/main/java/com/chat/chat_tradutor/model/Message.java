@@ -1,100 +1,48 @@
 package com.chat.chat_tradutor.model;
 
-import java.io.Serializable;
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.CascadeType;
-
 import java.time.LocalDateTime;
 
-import java.time.temporal.ChronoUnit;
-
 @Entity
-public class Message implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    // O ID da sala (Chave Estrangeira Lógica)
+    private Long roomId;
+
+    // Nome do remetente (Nick)
+    private String senderName;
+
+    // Conteúdo da mensagem
     private String content;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime registrationDate;
+    // Data e hora de envio
+    private LocalDateTime timestamp;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "thread_id", nullable = false)
-    private ThreadChat thread;
+    // --- Construtor vazio (Obrigatório para JPA) ---
+    public Message() {}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_user_id", nullable = false)
-    private User author;
+    // --- Getters e Setters ---
+    // Você deve adicionar todos os Getters e Setters aqui:
 
-    public Message() {
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Message(String content, ThreadChat thread, User author) {
+    public Long getRoomId() { return roomId; }
+    public void setRoomId(Long roomId) { this.roomId = roomId; }
 
-        this.content = content;
-        this.thread = thread;
-        this.author = author;
+    public String getSenderName() { return senderName; }
+    public void setSenderName(String senderName) { this.senderName = senderName; }
 
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    @PrePersist
-    public void prePersit() {
-
-        this.registrationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-
-    }
-
-    public long getId() {
-
-        return id;
-
-    }
-
-    public String getContent() {
-
-        return content;
-
-    }
-
-    public void setContent(String content) {
-
-        this.content = content;
-
-    }
-
-    public LocalDateTime getRegistrationDate() {
-
-        return registrationDate;
-
-    }
-
-    public ThreadChat getThread() {
-
-        return thread;
-
-    }
-
-    public User getAuthor() {
-
-        return author;
-
-    }
-
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 }

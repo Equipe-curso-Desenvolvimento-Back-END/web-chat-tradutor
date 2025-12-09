@@ -12,7 +12,7 @@ public class ChatMessage implements Serializable {
     private String content;
 
     // NomeID do usuario que enviou a mensagem
-    private String sender;
+    private String senderName;
 
     // Conteudo traduzido
     private String translatedContent;
@@ -47,15 +47,15 @@ public class ChatMessage implements Serializable {
 
     }
 
-    public String getSender() {
+    public String getSenderName() {
 
-        return sender;
+        return senderName;
 
     }
 
-    public void setSender(String sender) {
+    public void setSenderName(String senderName) {
 
-        this.sender = sender;
+        this.senderName = senderName;
 
     }
 

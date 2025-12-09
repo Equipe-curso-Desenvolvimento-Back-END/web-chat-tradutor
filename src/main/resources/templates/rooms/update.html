@@ -1,49 +1,79 @@
-<html>
-    <head>
-        <title>Update</title>
-    </head>
-    <body>
-        <!--- As tags <br> sao temporarias remover quando criar o .css --->
-       <div>  <!--- Div box cadastro -->
-        <h2>Update Room</h2> <!-- colocar em ingles temp -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Tela_Inicial/style.css">
+    <link rel="stylesheet" href="/css/Atualizar/update.css">
+    <title>Atualizar Sala</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">
+                <figure><img src="/img/Atualizar/Imagens/logo.png" alt="Logo GlobalSpeak"></figure>
+                <p>GlobalSpeak</p>
+            </div>
+        </a>
+        <a href="/rooms/myaccount"><button>Minha conta</button></a>
+    </header>
+    
+    <main>
+            <!--- As tags <br> sao temporarias remover quando criar o .css --->
+        <div class="atualizar">  <!--- Div box cadastro -->
+            <h2>Update Room</h2> <!-- colocar em ingles temp -->
             <form method="post">
-
-                <!-- //// DIV de aviso de ERRO -->
-            <div th:if="${updateRoomError}" class="alert alert-danger">
-                <h3>Falha de Regra de Negócio</h3>
-                <p th:text="${updateRoomError}"></p>
-            </div>
-
-            <!-- //// DIV de aviso de ALERTA /// -->
-
-            <div th:if="${updateRoomAlert}" class="alert alert-danger">
-                <h3>Alerta</h3>
-                <p th:text="${updateRoomAlert}"></p>
-            </div>
-
-            <!-- /// DIV de aviso de sucesso! /// -->
-            <div th:if="${updateRoomConfirm}" class="alert alert-danger">
-                <h3>Sucesso!</h3>
-                <p th:text="${updateRoomConfirm}"></p>
-            </div>
-
-            <div> 
-                <label for="username">Name Room</label><br>
-                <input type="text" name="oldname" id="oldname" placeholder="Write the name room here!">
-            </div>
-
-            <div>
-                <label for="username">Name Room</label><br>
-                <input type="text" name="name" id="name" placeholder="Write the name room here!">
-            </div>
-
-            <div>
-                <label for="username">Description Room</label><br>
-                <input type="text" name="description" id="description" placeholder="Write the description of room here!">
-            </div>
-            <button type="submit">Update Room</button>
+                        <!-- //// DIV de aviso de ERRO -->
+                <div th:if="${updateRoomError}" class="alert alert-danger erro">
+                    <h3>Falha de Regra de Negócio</h3>
+                    <p th:text="${updateRoomError}"></p>
+                </div>
+                        <!-- //// DIV de aviso de ALERTA /// -->
+                <div th:if="${updateRoomAlert}" class="alert alert-danger alerta">
+                    <h3>Alerta</h3>
+                    <p th:text="${updateRoomAlert}"></p>
+                </div>
+                        <!-- /// DIV de aviso de sucesso! /// -->
+                <div th:if="${updateRoomConfirm}" class="alert alert-danger certo">
+                    <h3>Sucesso!</h3>
+                    <p th:text="${updateRoomConfirm}"></p>
+                </div>
+                <div>
+                    <label for="username">Name Room</label><br>
+                    <input type="text" name="oldname" id="oldname" placeholder="Write the name room here!">
+                </div>
+                <div>
+                    <label for="username">Name Room</label><br>
+                    <input type="text" name="name" id="name" placeholder="Write the name room here!">
+                </div>
+                <div>
+                    <label for="username">Description Room</label><br>
+                    <input type="text" name="description" id="description" placeholder="Write the description of room here!">
+                </div>
+                <button class="btn" type="submit">Update Room</button>
             </form>
-            <a href="/rooms"><button type="submit">Back to rooms</button></a><br>
-       </div>
-    </body>
+            <a href="/rooms"><button class="dois" type="submit">Voltar para Salas</button></a><br>
+        </div>
+    </main>
+
+    <footer>
+        <div class="redes">
+            <figure><img src="/img/Atualizar/Redes sociais/instagram.png" alt="instagram"></figure>
+            <figure><img src="/img/Atualizar/Redes sociais/twitter.png" alt="twitter"></figure>
+            <figure><img src="/img/Atualizar/Redes sociais/face.png" alt="facebook"></figure>
+            <figure><img src="/img/Atualizar/Redes sociais/whatsapp.png" alt="whatsapp"></figure>
+        </div>
+        <div class="institucional">
+            <p>SENAI Tatuapé - "Frederico Jacob"</span> <br>
+              Rua São Jorge, 634 - Tatuapé - São Paulo/SP | CEP 03087-000</p>
+            <p>CENTRAL DE RELACIONAMENTO</span> <br>
+                (11) 2227-8020 (Telefone/WhatsApp) <br>
+                senaimanutencao@sp.senai.br</p>
+        </div>
+        <div class="devsCopyright">
+            <P>Devs: Isabelle C. F., Pietro, Dylan, Joyce e Willian</P>
+            <p>© 2025 SENAI. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
 </html>

@@ -375,7 +375,7 @@ public class RoomController {
 
             }
 
-            flash.addFlashAttribute("deleteRoomError", String.format("Sala \"%s\" foi removida com sucesso!",room.getName()));
+            flash.addFlashAttribute("deleteRoomConfirm", String.format("Sala \"%s\" foi removida com sucesso!",room.getName()));
 
             // Por base usuario se mantem em delete
             // Somente um redirect na funcao deve conter para esse formato
@@ -406,6 +406,8 @@ public class RoomController {
         if (room == null) {
 
             flash.addFlashAttribute("updateRoomError","Sala não encontrada!");
+
+            return "redirect:/rooms/update";
 
         }
 

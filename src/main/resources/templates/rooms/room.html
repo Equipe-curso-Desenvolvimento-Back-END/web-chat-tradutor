@@ -11,8 +11,10 @@
     <input type="hidden" id="roomId" th:value="${room.id}" />
 
         <p>
-    <label for="nickname-input">Seu Nick:</label>
-    <input type="text" id="nickname-input" value="Visitante" placeholder="Seu nome" />
+
+    <!-- Nao mais necessario pois pegaos o nick name real -->
+    <!-- <input type="text" id="nickname-input" value="Visitante" placeholder="Seu nome" /> -->
+    <input type="hidden" id="nickname-data" th:value="${userName}" />
         </p>
 
         <!-- Botao de sair -->
@@ -72,7 +74,8 @@
     function sendMessage() {
         // Acesso local aos elementos para evitar ReferenceError
         const messageInput = document.getElementById('message-input');
-        const nicknameInput = document.getElementById('nickname-input');
+        // nickname-input virou nickname-data
+        const nicknameInput = document.getElementById('nickname-data');
         const roomIdElement = document.getElementById('roomId');
 
         if (!stompClient || !stompClient.connected) {

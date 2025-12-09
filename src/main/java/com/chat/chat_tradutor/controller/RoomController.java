@@ -69,6 +69,8 @@ public class RoomController {
 
     }
 
+    // Metodo de listagem meio principal para passagem dos dados
+    // ao front-end via https
     // formato resumido sem rooms/room/{roomId}
     @GetMapping("/{roomId}")
     public String accessRoom(@PathVariable Long roomId, Model model, HttpSession session) {
@@ -81,20 +83,42 @@ public class RoomController {
 
         Room room = service.findById(roomId);
 
+        // Metodos de redundancia
+
         if (room == null) {
 
             throw new RuntimeException("Sala não existe!");
 
         }
 
-         model.addAttribute("room",room);
+        // ----------------------
+
+        model.addAttribute("room",room);
 
         // creatorId
         Long currentUserId = (Long) session.getAttribute("userId");
 
+        if (currentUserId == null) {
+
+            return "rooms/index";
+
+        }
+
         // add user na room Mais tarde
 
         User local = userService.readUser(currentUserId);
+
+        if (local == null) {
+
+            throw new RuntimeException("Id Usuario não existe");
+
+        }
+
+        // ---------------------- FINAL
+
+        String userName = local.getName();
+
+        model.addAttribute("userName",userName);
 
         /// Condicao para evitar duplicata!
         if (room.getCreatorId() == local.getId()) {

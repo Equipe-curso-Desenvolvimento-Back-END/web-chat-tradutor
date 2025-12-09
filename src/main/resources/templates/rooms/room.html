@@ -72,8 +72,14 @@
 
         // Função para enviar mensagem
         function sendMessage() {
-            const input = document.getElementById('message-input');
+            const messageInput = document.getElementById('message-input');
             const nicknameInput = document.getElementById('nickname-input');
+
+            // Verificar se os elementos foram encontrados (bom para debug)
+            if (!messageInput || !nicknameInput) {
+                console.error("Erro: Campos de input não encontrados no DOM.");
+                return;
+            }
 
             const content = messageInput.value.trim();
             const senderName = nicknameInput.value.trim();

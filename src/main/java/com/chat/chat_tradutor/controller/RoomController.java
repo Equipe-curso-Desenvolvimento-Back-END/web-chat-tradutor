@@ -65,6 +65,11 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public String accessRoom(@PathVariable Long roomId, Model model, HttpSession session) {
 
+        if (session.getAttribute("user") == null) {
+
+            return "redirect:/login";
+
+        }
 
         Room room = service.findById(roomId);
 

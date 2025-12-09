@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sala de Chat: <span th:text="${room.name}"></span></title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    
+    <style>
+        #chat-output { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        .message { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <h2>Chat na Sala: <span th:text="${room.name}"></span> (ID: <span th:text="${roomId}"></span>)</h2>
+    <hr>
+
+    <div id="chat-output">
+        </div>
+
+    <input type="text" id="message-input" placeholder="Digite sua mensagem">
+    <button onclick="sendMessage()">Enviar</button>
+    <button onclick="disconnect()">Sair da Sala</button>
+
+    <script th:inline="javascript">
+        // 1. CAPTURA DO ROOM ID (Thymeleaf injeta o valor do Model aqui)
+        const ROOM_ID = [[${roomId}]]; 
+        
+        let stompClient = null;
+
+        // Função para conectar ao WebSocket
+        function connect() {
+            // Conecta-se ao endpoint /ws configurado no Spring
+            const socket = new SockJS('/ws'); 
+            stompClient = Stomp.over(socket);
+            
+            stompClient.connect({}, function (frame) {
+                console.log('Conectado ao WebSocket: ' + frame);
+                
+                // 2. ASSINATURA: O cliente se inscreve para receber mensagens
+                // Destino: /topic/room/{roomId}
+                stompClient.subscribe('/topic/room/' + ROOM_ID, function (messageOutput) {
+                    showMessage(messageOutput.body);
+                });
+            }, function(error) {
+                console.error('Erro de conexão:', error);
+            });
+        }
+
+        // Função para desconectar
+        function disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+            console.log("Desconectado do servidor.");
+            // Opcional: Redirecionar para a lista de salas após desconectar
+            // window.location.href = '/rooms'; 
+        }
+
+        // Função para enviar mensagem
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value;
+            
+            if (message.trim() === '') return;
+
+            // 3. ENVIO: Envia a mensagem para o ChatController
+            // Destino: /app/room/{roomId}
+            stompClient.send("/app/room/" + ROOM_ID, {}, message);
+            
+            input.value = ''; // Limpa o campo após o envio
+        }
+
+        // Função para exibir mensagem
+        function showMessage(rawMessage) {
+            const output = document.getElementById('chat-output');
+            const p = document.createElement('p');
+            p.className = 'message';
+            // O servidor (ChatController) está devolvendo uma String simples por enquanto.
+            p.textContent = rawMessage; 
+            
+            output.appendChild(p);
+            // Scroll automático para a última mensagem
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Inicia a conexão assim que a página é carregada
+        window.onload = connect;
+        
+    </script>
+
+</body>
+</html>

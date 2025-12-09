@@ -43,24 +43,6 @@ public class RoomController {
 
     }
 
-    // sempre implementar o security nas novas paginas fixas
-    //@GetMapping("")
-    //public String roomsHome(HttpSession session) {
-
-        //if (session.getAttribute("user") == null) {
-
-            // passivo de falha
-       //     return "redirect:/login";
-
-      //  }
-
-     //   return "rooms/index";
-
-    //}
-
-    // metodo de listagem grafica
-
-    // Novo render main
     @GetMapping
     public String listRooms(Model model,
             HttpSession session) {
@@ -76,6 +58,53 @@ public class RoomController {
         model.addAttribute("roomsList",rooms);
 
         return "rooms/index";
+
+    }
+
+    // formato resumido sem rooms/room/{roomId}
+    @GetMapping("/{roomId}")
+    public String accessRoom(@PathVariable Long roomId, Model model, HttpSession session) {
+
+
+        Room room = service.findById(roomId);
+
+        if (room == null) {
+
+            throw new RuntimeException("Sala não existe!");
+
+        }
+
+         model.addAttribute("room",room);
+
+        // creatorId
+        Long currentUserId = (Long) session.getAttribute("userId");
+
+        // add user na room Mais tarde
+
+        User local = userService.readUser(currentUserId);
+
+        /// Condicao para evitar duplicata!
+        if (room.getCreatorId() == local.getId()) {
+
+            return "rooms/room";
+
+        }
+
+        Room roomVerify = service.saveUser(room,local);
+
+        if (roomVerify != null) {
+
+            User userVerify = userService.saveRoom(local,roomVerify);
+
+            service.updateRoom(roomVerify);
+
+            // possibilidade de salvar o usuario para sincronziacao completao
+            // somente se for necessario
+            // userService.updateUser(userVerify);
+
+        }
+
+        return "rooms/room";
 
     }
 

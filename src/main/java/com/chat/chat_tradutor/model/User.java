@@ -56,7 +56,11 @@ public class User implements Serializable {
     @PrePersist()
     public void prePersist() {
 
-        this.registrationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        if (this.registrationDate == null) {
+
+            this.registrationDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
+        }
 
     }
 

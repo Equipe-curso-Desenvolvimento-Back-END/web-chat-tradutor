@@ -35,7 +35,9 @@ public class Message {
     public void prePersist() {
 
         // Deixando o timezone como no "servidor" hospedado
-        this.timestamp = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        if (this.timestamp == null) {
+            this.timestamp = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        }
 
     }
 

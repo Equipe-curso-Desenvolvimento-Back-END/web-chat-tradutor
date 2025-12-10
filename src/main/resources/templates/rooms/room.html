@@ -8,6 +8,13 @@
 </head>
 <body>
     <!-- Carregamento de captura do room.id -->
+
+    <!-- Mostra as infos do chat -->
+    <h2 th:text="'Você está na sala: ' + ${room.name}">Nome da Sala de Chat</h2>
+    <p th:text="'Criador da Sala: ' + ${room.creatorName}">Usuário: Nome Carregado</p>   
+    <p th:text="'Usuário: ' + ${userName}">Usuário: Nome Carregado</p>
+
+    <!-- Armazena as infos de variavel no html -->
     <input type="hidden" id="roomId" th:value="${room.id}" />
 
     <input type="hidden" id="nickname-data" th:value="${userName}" />
@@ -19,17 +26,19 @@
     <div id="chat-output" style="height: 300px; border: 1px solid #ccc; overflow-y: scroll; margin-top: 10px;">
             </div>
 
+        <!-- Input do usuario -->
     <input type="text" id="message-input" placeholder="Texto para enviar no chat" />
+            
+            <!-- Botao de enviar -->
     <button onclick="sendMessage()">Enviar</button>
 
 <script>
     // GLOBAIS
     let stompClient = null;
 
-        // 2. FUNÇÃO PRINCIPAL QUE INICIA TUDO
+    // 2. FUNÇÃO PRINCIPAL QUE INICIA TUDO
     function connect() {
-        // 🔑 SOLUÇÃO DO TypeError: Lemos o ID APENAS AQUI, dentro da função de conexão.
-        // Se o elemento não for encontrado no DOM, o ROOM_ID será null e o if impedirá a falha.
+        
         const roomIdElement = document.getElementById('roomId');
         
         if (!roomIdElement) {
@@ -81,11 +90,6 @@
             console.error("Erro: Campos de input não encontrados para envio.");
             return;
         }
-   
-        // if (!messageInput || !roomIdElement) {
-        //     console.error("Erro: Campos de input não encontrados para envio.");
-        //     return;
-        // }
         
         const content = messageInput.value.trim();
         const senderName = nicknameInput.value.trim();
@@ -125,7 +129,8 @@
         }
     }
 
-    // INICIALIZADOR DO DOM 
+    // INICIALIZADOR DO DOM + interface de mensagem do chat
+    
     window.onload = connect;
 
 </script>

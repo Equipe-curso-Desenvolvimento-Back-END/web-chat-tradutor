@@ -3,8 +3,11 @@ package com.chat.chat_tradutor.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class Message {
@@ -27,6 +30,14 @@ public class Message {
 
     // Objeto  JSON deve-se ser sempre construtor VAZIO
     public Message() {}
+
+    @PrePersist
+    public void prePersist() {
+
+        // Deixando o timezone como no "servidor" hospedado
+        this.timestamp = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
+    }
 
     public Long getId() {
 

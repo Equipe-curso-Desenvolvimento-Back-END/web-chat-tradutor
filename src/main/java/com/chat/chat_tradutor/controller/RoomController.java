@@ -87,16 +87,30 @@ public class RoomController {
 
         }
 
-         model.addAttribute("room",room);
 
-        // creatorId
-        Long currentUserId = (Long) session.getAttribute("userId");
+        model.addAttribute("room",room);
 
-        // add user na room Mais tarde
+
+        Long currentUserId = (Long)  session.getAttribute("userId");
+
+        if (currentUserId == null) {
+
+            return "rooms/index";
+
+        }
 
         User local = userService.readUser(currentUserId);
 
-        /// Condicao para evitar duplicata!
+        if (local == null) {
+
+            throw new RuntimeException("Id Usuario não existe");
+
+        }
+
+        String userName = local.getName();
+
+        model.addAttribute("userName",userName);
+
         if (room.getCreatorId() == local.getId()) {
 
             return "rooms/room";
@@ -116,6 +130,7 @@ public class RoomController {
             // userService.updateUser(userVerify);
 
         }
+
 
         var messageHistory = messageRepository.findByRoomIdOrderByTimestampAsc(roomId);
 

@@ -25,24 +25,66 @@ public class Message {
     // Data e hora de envio
     private LocalDateTime timestamp;
 
-    // --- Construtor vazio (Obrigatório para JPA) ---
+    // Objeto  JSON deve-se ser sempre construtor VAZIO
     public Message() {}
 
-    // --- Getters e Setters ---
-    // Você deve adicionar todos os Getters e Setters aqui:
+    public Long getId() {
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+        return id;
 
-    public Long getRoomId() { return roomId; }
-    public void setRoomId(Long roomId) { this.roomId = roomId; }
+    }
 
-    public String getSenderName() { return senderName; }
-    public void setSenderName(String senderName) { this.senderName = senderName; }
+    public void setId(Long id) {
 
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
+        this.id = id;
 
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    }
+
+    public Long getRoomId() {
+
+        return roomId;
+
+    }
+    public void setRoomId(Long roomId) {
+
+        this.roomId = roomId;
+
+    }
+
+    public String getSenderName() {
+
+        return senderName;
+
+    }
+
+    public void setSenderName(String senderName) {
+
+        this.senderName = senderName;
+
+    }
+
+    public String getContent() {
+
+        return content;
+
+    }
+
+    public void setContent(String content) {
+
+        this.content = content;
+
+    }
+
+    public LocalDateTime getTimestamp() {
+
+        return timestamp;
+
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+
+        this.timestamp = timestamp;
+
+    }
+
 }

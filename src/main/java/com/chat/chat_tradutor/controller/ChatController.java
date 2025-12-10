@@ -1,28 +1,31 @@
 package com.chat.chat_tradutor.controller;
 
-import com.chat.chat_tradutor.model.ChatMessage; // DTO
-
 import com.chat.chat_tradutor.model.Message;
 
-import com.chat.chat_tradutor.repository.MessageRepository;
+//import com.chat.chat_tradutor.repository.MessageRepository;
 
-import java.time.LocalDateTime;
+import com.chat.chat_tradutor.service.MessageService;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.handler.annotation.Payload;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDateTime;
 
 @Controller
 public class ChatController {
 
-    private final MessageRepository messageRepository;
+    @Autowired
+    private final MessageService messageService;
 
-    public ChatController(MessageRepository messageRepository) {
+    public ChatController( MessageService messageService) {
 
-        this.messageRepository = messageRepository;
+        this.messageService = messageService;
 
     }
 
@@ -32,10 +35,11 @@ public class ChatController {
     @MessageMapping("/room/{roomId}")
 
     @SendTo("/topic/room/{roomId}")
-    public ChatMessage sendMessage(
+    public Message sendMessage(
         @DestinationVariable String roomId,
-        @Payload ChatMessage message) { // payload real
+        @Payload Message message) { // payload real
 
+        // depois adicionar message direto
         Message messageEntity = new Message();
 
         // manter persistencia no dado
@@ -45,13 +49,11 @@ public class ChatController {
         messageEntity.setContent(message.getContent());
         messageEntity.setTimestamp(LocalDateTime.now());
 
-        messageRepository.save(messageEntity);
+        // registro no db
+        Message messageDB = messageService.saveMessage(messageEntity);
 
-        message.setRoomId(roomId);
-
-        // futuro registro no banco
-
-        return message; // OBJETO JSON completo, objeto Java serealizado de volta para JSON
+        // retorno de JSON
+        return messageDB; // OBJETO JSON completo, objeto Java serealizado de volta para JSON
 
     }
 }
